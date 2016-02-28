@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.core;
+package com.shadows.hkprogrammer.core.utils;
 
+import com.shadows.hkprogrammer.core.utils.ByteConvertHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,8 +94,20 @@ public class ByteConvertHelperTest {
     public void testIntegerToByte() {
         System.out.println("IntegerToByte");
         int value = -16975632;
-        byte[] expResult = new byte[]{-2, -4, -8, -16};
+        byte[] expResult = new byte[]{ -2, -4, -8, -16 };
         byte[] result = ByteConvertHelper.IntegerToByte(value);
+        assertArrayEquals(expResult, result);
+    }
+    
+     /**
+     * Test of IntegerToByteBySB method, of class ByteConvertHelper.
+     */
+    @Test
+    public void testIntegerToByteBySB() {
+        System.out.println("IntegerToByteBySB");
+        int value = -16975632;
+        byte[] expResult = new byte[]{-2, -16};
+        byte[] result = ByteConvertHelper.IntegerToByteBySB(value);
         assertArrayEquals(expResult, result);
     }
     

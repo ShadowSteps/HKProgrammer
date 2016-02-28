@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.core;
+package com.shadows.hkprogrammer.core.utils;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +18,7 @@ public class ByteConvertHelper {
         int length = value.length - 1;
         if (index < 0)
             throw new IndexOutOfBoundsException("Byte array given is empty!");
-        while (value[index] == 0&&index<length)
+        while (value[index] == 0&&index<length-1)
             index++;
         return value[index];
     }

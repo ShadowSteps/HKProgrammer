@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.core;
+package com.shadows.hkprogrammer.core.utils;
 
-import static com.shadows.hkprogrammer.core.ByteConvertHelper.IntegerToByte;
-import static com.shadows.hkprogrammer.core.ByteConvertHelper.LSB;
-import static com.shadows.hkprogrammer.core.ByteConvertHelper.MSB;
+import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.IntegerToByte;
+import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.LSB;
+import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.MSB;
 
 /**
  *

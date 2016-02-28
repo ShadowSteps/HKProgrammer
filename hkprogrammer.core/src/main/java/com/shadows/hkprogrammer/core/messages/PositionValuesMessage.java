@@ -5,22 +5,38 @@
  */
 package com.shadows.hkprogrammer.core.messages;
 
-import com.shadows.hkprogrammer.core.ByteArrayHelper;
-import com.shadows.hkprogrammer.core.ByteConvertHelper;
 import java.util.Arrays;
 
 /**
  *
  * @author John
  */
-public class PositionValuesMessage extends SerialMessage {    
+public class PositionValuesMessage{    
     private final int[] ChannelPositionInfo = { 1500, 1500, 1500, 1500, 1500, 1500 };
-    private int fourthPseudo;
+    private int fourthPseudo = 500;   
+
+    public int getFourthPseudo() {
+        return fourthPseudo;
+    }
     
-    public PositionValuesMessage() {
-        super((byte)0xFC, 18);
+    public void setChannelPositionInfo(int Channel,int Value) {
+        CheckChannelValueRange(Value);
+        this.ChannelPositionInfo[Channel - 1] = Value;
+    }
+    
+    public int getChannelPositionInfo(int Channel) {
+        return this.ChannelPositionInfo[Channel - 1];
     }
 
+    public void setFourthChannelPositionPseudo(int FourthChannelPositionPseudo) {
+        this.fourthPseudo = FourthChannelPositionPseudo;
+    }    
+    
+    private void CheckChannelValueRange(int Value){
+        if (Value < 1000||Value > 2000)
+            throw new IllegalArgumentException("Value must be between 1000 and 2000 for Pot-position!");        
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -45,49 +61,5 @@ public class PositionValuesMessage extends SerialMessage {
             return false;
         }
         return true;
-    }
-
-    
-    public void setChannelPositionInfo(int Channel,int Value) {
-        CheckChannelValueRange(Value);
-        this.ChannelPositionInfo[Channel - 1] = Value;
-    }
-
-    public void setFourthChannelPositionPseudo(int FourthChannelPositionPseudo) {
-        this.fourthPseudo = FourthChannelPositionPseudo;
-    }    
-    
-    private void CheckChannelValueRange(int Value){
-        if (Value < 1000||Value > 2000)
-            throw new IllegalArgumentException("Value must be between 1000 and 2000 for Pot-position!");        
-    }
-    
-    @Override
-    protected byte[] GetPayloadToByteArray() {
-        byte[] payload = new byte[14];
-        for (int i = 0; i < ChannelPositionInfo.length; i++) {
-            payload = ByteArrayHelper.WriteToByteArray(
-                payload, 
-                ByteConvertHelper.IntegerToByteBySB(this.ChannelPositionInfo[i]),
-                i*2
-            );  
-        }   
-        payload = ByteArrayHelper.WriteToByteArray(
-            payload, 
-            ByteConvertHelper.IntegerToByteBySB(this.fourthPseudo),
-            12
-        );  
-        return payload;
-    }
-
-    @Override
-    protected void GetVariablesFromPayload(byte[] Payload) {  
-        byte[] fourthPseudoBytes = ByteArrayHelper.ReadFromByteArray(Payload, 12, 2);
-        for (int i = 0; i < this.ChannelPositionInfo.length; i++) {
-            byte[] get = ByteArrayHelper.ReadFromByteArray(Payload, i*2, 2);
-            this.setChannelPositionInfo(i+1, ByteConvertHelper.ByteToInteger(get));
-        }
-        this.setFourthChannelPositionPseudo(ByteConvertHelper.ByteToInteger(fourthPseudoBytes));
     }   
-    
 }
