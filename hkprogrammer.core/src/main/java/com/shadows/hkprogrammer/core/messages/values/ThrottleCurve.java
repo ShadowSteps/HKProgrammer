@@ -10,8 +10,8 @@ package com.shadows.hkprogrammer.core.messages.values;
  * @author John
  */
 public class ThrottleCurve {
-    public int Normal;
-    public int ID;
+    private int Normal = 0;
+    private int ID = 0;
 
     public int getNormal() {
         return Normal;

@@ -5,36 +5,34 @@
  */
 package com.shadows.hkprogrammer.core.messages.values;
 
+import com.shadows.hkprogrammer.core.messages.enums.MixDestination;
+import com.shadows.hkprogrammer.core.messages.enums.MixSource;
+import com.shadows.hkprogrammer.core.messages.enums.MixSwitch;
+
 /**
  *
  * @author John
  */
 public class MixSetting {
-    private int Source;
-    private int Destination;
-    private int Uprate;
-    private int Downrate;
-    private int Switch;
+    private MixSource Source = MixSource.CH1;
+    private MixDestination Destination = MixDestination.CH1;
+    private int Uprate = 0;
+    private int Downrate = 0;
+    private MixSwitch Switch = MixSwitch.OFF;
 
-    public int getSource() {
+    public MixSource getSource() {
         return Source;
     }
 
-    public void setSource(int Source) {
-        if (Source > 7 || Source < 0)
-            throw new IllegalArgumentException("Value of Source must be between 0 and 7");
-    
+    public void setSource(MixSource Source) {
         this.Source = Source;
     }
 
-    public int getDestination() {
+    public MixDestination getDestination() {
         return Destination;
     }
 
-    public void setDestination(int Destination) {
-        if (Destination > 5 || Destination < 0)
-            throw new IllegalArgumentException("Value of Destination must be between 0 and 5");
-    
+    public void setDestination(MixDestination Destination) {
         this.Destination = Destination;
     }
 
@@ -56,14 +54,11 @@ public class MixSetting {
         this.Downrate = Downrate;
     }
 
-    public int getSwitch() {
+    public MixSwitch getSwitch() {
         return Switch;
     }
 
-    public void setSwitch(int Switch) {
-        if (Switch > 4 || Switch < 0)
-            throw new IllegalArgumentException("Switch of Destination must be between 0 and 4");
-    
+    public void setSwitch(MixSwitch Switch) {
         this.Switch = Switch;
     }
     

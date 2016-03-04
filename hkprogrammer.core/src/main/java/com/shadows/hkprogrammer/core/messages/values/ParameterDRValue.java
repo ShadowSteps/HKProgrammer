@@ -10,8 +10,8 @@ package com.shadows.hkprogrammer.core.messages.values;
  * @author John
  */
 public class ParameterDRValue {
-    private int OnValue;
-    private int OffValue;
+    private int OnValue = 0;
+    private int OffValue = 0;
 
     public int getOnValue() {
         return OnValue;

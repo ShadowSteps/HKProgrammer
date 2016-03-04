@@ -5,10 +5,10 @@
  */
 package com.shadows.hkprogrammer.core;
 
+import com.shadows.hkprogrammer.core.messages.ParameterMessage;
 import com.shadows.hkprogrammer.core.messages.ParameterRequest;
 import com.shadows.hkprogrammer.core.messages.PositionValuesMessage;
-import com.shadows.hkprogrammer.core.utils.ByteArrayHelper;
-import com.shadows.hkprogrammer.core.utils.ByteConvertHelper;
+import com.shadows.hkprogrammer.core.utils.*;
 import java.util.Arrays;
 
 /**
@@ -16,6 +16,8 @@ import java.util.Arrays;
  * @author John
  */
 public class MessageHandler {     
+    private final ByteConvertHelper Converter = new ByteConvertHelper();
+    private final ByteArrayHelper ArrayTools = new ByteArrayHelper();
     private byte[] BuildHeader(byte messageIdentifyHeader){
         byte Header = MessageHandlerConsts.HeaderBeggining;
         return new byte[]{ Header, messageIdentifyHeader };
@@ -23,7 +25,7 @@ public class MessageHandler {
     
     private byte[] InitializeByteArray(int length,byte msgIdentifier){
         byte[] returnArray = new byte[length];        
-        returnArray = ByteArrayHelper.WriteToByteArray(
+        returnArray = ArrayTools.WriteToByteArray(
                 returnArray,
                 BuildHeader(msgIdentifier),
                 0
@@ -32,37 +34,59 @@ public class MessageHandler {
     }
     
     private byte[] CreateCheckSumToByteArray(byte[] array){
-        byte[] payload = ByteArrayHelper.ReadFromByteArray(array, 2, array.length - 4);
-        byte[] Checksum = ByteArrayHelper.ByteArrayCheckSumBySB(payload);
-        return ByteArrayHelper.WriteToByteArray(array,Checksum,2 + payload.length);
+        byte[] payload = ArrayTools.ReadFromByteArray(array, 2, array.length - 4);
+        byte[] Checksum = ArrayTools.ByteArrayCheckSumBySB(payload);
+        return ArrayTools.WriteToByteArray(array,Checksum,2 + payload.length);
     }
     
     private byte[] WritePayloadOfPositionMessage(PositionValuesMessage message,byte[] messageBytes){
         byte[] payload = new byte[14];
         for (int i = 0; i < 6; i++) {
-            payload = ByteArrayHelper.WriteToByteArray(
+            ArrayTools.WriteToByteArray(
                 payload, 
-                ByteConvertHelper.IntegerToByteBySB(message.getChannelPositionInfo(i+1)),
+                Converter.IntegerToByteBySB(message.getChannelPositionInfo(i+1)),
                 i*2
             );  
         }   
-        payload = ByteArrayHelper.WriteToByteArray(
+        ArrayTools.WriteToByteArray(
             payload, 
-            ByteConvertHelper.IntegerToByteBySB(message.getFourthPseudo()),
+            Converter.IntegerToByteBySB(message.getFourthPseudo()),
             12
         );  
-        return ByteArrayHelper.WriteToByteArray(messageBytes,payload,2);
+        return ArrayTools.WriteToByteArray(messageBytes,payload,2);
+    }
+    
+    private byte[] WritePayloadOfParameterMessage(ParameterMessage message,byte[] messageBytes){
+        byte[] payload = new byte[65];
+        ArrayTools.WriteToByteArray(
+                payload, 
+                Converter.StringToByte(message.getTXModelType().name()), 
+                0
+        );
+        for (int i = 0; i < 6; i++) {
+            payload = ArrayTools.WriteToByteArray(
+                payload, 
+                Converter.IntegerToByteBySB(message.getChannelPositionInfo(i+1)),
+                i*2
+            );  
+        }   
+        payload = ArrayTools.WriteToByteArray(
+            payload, 
+            Converter.IntegerToByteBySB(message.getFourthPseudo()),
+            12
+        );  
+        return ArrayTools.WriteToByteArray(messageBytes,payload,2);
     }
     
     private void ValidatePositionValuesMessageBytes(byte[] messageBytes){
         if (messageBytes.length != MessageHandlerConsts.msgPositionLength)
             throw new IllegalArgumentException("Message length is more then allowed for this type of message!");
-        byte[] MessageHeader = ByteArrayHelper.ReadFromByteArray(messageBytes, 0, 2);
+        byte[] MessageHeader = ArrayTools.ReadFromByteArray(messageBytes, 0, 2);
         if (!Arrays.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderPosition)))
             throw new IllegalArgumentException("Message header is different from expected!"); 
-        byte[] Checksum = ByteArrayHelper.ReadFromByteArray(messageBytes, messageBytes.length - 2, 2);
-        byte[] Payload = ByteArrayHelper.ReadFromByteArray(messageBytes, 2, messageBytes.length - 4);
-        byte[] payloadChecksum = ByteArrayHelper.ByteArrayCheckSumBySB(Payload);
+        byte[] Checksum = ArrayTools.ReadFromByteArray(messageBytes, messageBytes.length - 2, 2);
+        byte[] Payload = ArrayTools.ReadFromByteArray(messageBytes, 2, messageBytes.length - 4);
+        byte[] payloadChecksum = ArrayTools.ByteArrayCheckSumBySB(Payload);
         if (!Arrays.equals(Checksum,payloadChecksum))
             throw new IllegalArgumentException("Message checksum does not match payload!"); 
     }
@@ -70,24 +94,24 @@ public class MessageHandler {
     private void ValidateParameterRequestMessageBytes(byte[] messageBytes){
         if (messageBytes.length != MessageHandlerConsts.msgParameterRequestLength)
             throw new IllegalArgumentException("Message length is more then allowed for this type of message!");
-        byte[] MessageHeader = ByteArrayHelper.ReadFromByteArray(messageBytes, 0, 2);
+        byte[] MessageHeader = ArrayTools.ReadFromByteArray(messageBytes, 0, 2);
         if (!Arrays.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderParameterRequest)))
             throw new IllegalArgumentException("Message header is different from expected!"); 
-        byte[] Payload = ByteArrayHelper.ReadFromByteArray(messageBytes, 2, 1);
+        byte[] Payload = ArrayTools.ReadFromByteArray(messageBytes, 2, 1);
         byte[] payloadChecksum = new byte[] { (byte)0x00 };
-         if (!Arrays.equals(Payload,payloadChecksum))
-            throw new IllegalArgumentException("Message flag does not match 0!"); 
+        if (!Arrays.equals(Payload,payloadChecksum))
+           throw new IllegalArgumentException("Message flag does not match 0!"); 
     }
     
     private PositionValuesMessage CreatePositionValuesMessageFromBytes(byte[] msgBytes){
-        byte[] Payload = ByteArrayHelper.ReadFromByteArray(msgBytes, 2, msgBytes.length - 4);
-        byte[] fourthPseudoBytes = ByteArrayHelper.ReadFromByteArray(Payload, 12, 2);
+        byte[] Payload = ArrayTools.ReadFromByteArray(msgBytes, 2, msgBytes.length - 4);
+        byte[] fourthPseudoBytes = ArrayTools.ReadFromByteArray(Payload, 12, 2);
         PositionValuesMessage message = new PositionValuesMessage();
         for (int i = 0; i < 6; i++) {
-            byte[] get = ByteArrayHelper.ReadFromByteArray(Payload, i*2, 2);
-            message.setChannelPositionInfo(i+1, ByteConvertHelper.ByteToInteger(get));
+            byte[] get = ArrayTools.ReadFromByteArray(Payload, i*2, 2);
+            message.setChannelPositionInfo(i+1, Converter.ByteToInteger(get));
         }
-        message.setFourthChannelPositionPseudo(ByteConvertHelper.ByteToInteger(fourthPseudoBytes));
+        message.setFourthChannelPositionPseudo(Converter.ByteToInteger(fourthPseudoBytes));
         return message;
     }
     
@@ -111,13 +135,30 @@ public class MessageHandler {
                 MessageHandlerConsts.msgParameterRequestLength,
                 MessageHandlerConsts.HeaderParameterRequest
         );
-        byte[] integerBytes = ByteConvertHelper.IntegerToByteBySB(message.getFlag());
+        byte[] integerBytes = Converter.IntegerToByteBySB(message.getFlag());
         byte[] valueBytes = new byte[] { integerBytes[1] };
-        returnArray = ByteArrayHelper.WriteToByteArray(returnArray, valueBytes , 2);  
+        returnArray = ArrayTools.WriteToByteArray(returnArray, valueBytes , 2);  
         return returnArray;
     }        
     
     public ParameterRequest GetParameterRequestMessageFromBytes(byte[] messageBytes){
+        ValidateParameterRequestMessageBytes(messageBytes);
+        ParameterRequest message = new ParameterRequest();
+        return message;
+    }
+    
+    public byte[] GetBytesForParameterDumpMessage(ParameterMessage message){
+        byte[] returnArray = InitializeByteArray(
+                MessageHandlerConsts.msgParameterRequestLength,
+                MessageHandlerConsts.HeaderParameterDump
+        );
+        byte[] integerBytes = Converter.IntegerToByteBySB(message.getFlag());
+        byte[] valueBytes = new byte[] { integerBytes[1] };
+        returnArray = ArrayTools.WriteToByteArray(returnArray, valueBytes , 2);  
+        return returnArray;
+    }        
+    
+    public ParameterRequest GetParameterDumpMessageFromBytes(byte[] messageBytes){
         ValidateParameterRequestMessageBytes(messageBytes);
         ParameterRequest message = new ParameterRequest();
         return message;

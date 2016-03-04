@@ -5,16 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.utils;
 
-import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.IntegerToByte;
-import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.LSB;
-import static com.shadows.hkprogrammer.core.utils.ByteConvertHelper.MSB;
-
 /**
  *
  * @author John
  */
 public class ByteArrayHelper {
-     public static byte[] WriteToByteArray(byte[] message, byte[] part, int offset){       
+    private final ByteConvertHelper Converter = new ByteConvertHelper();    
+    public byte[] WriteToByteArray(byte[] message, byte[] part, int offset){       
         int length = part.length;        
         if ((offset + length) > message.length)
             throw new ArrayIndexOutOfBoundsException("Part length is more then the space available for write in message from given offset!");
@@ -22,7 +19,7 @@ public class ByteArrayHelper {
         return message;
     }
     
-     public static byte[] ReadFromByteArray(byte[] message, int offset, int length){
+    public byte[] ReadFromByteArray(byte[] message, int offset, int length){
         if ((offset + length) > message.length)
             throw new ArrayIndexOutOfBoundsException("Part length is more then the space available fore read in message from given offset!");
         byte[] part = new byte[length];
@@ -30,16 +27,17 @@ public class ByteArrayHelper {
         return part;
     }
      
-    public static int ByteArrayChecksum(byte[] array){
+    public int ByteArrayChecksum(byte[] array){
         int Sum = 0;
-        for (int i = 0;i<array.length;i++)
-            Sum += array[i];
+        for (Byte byteValue : array) {
+            Sum += byteValue;
+        }
         return Sum;
     }
     
-    public static byte[] ByteArrayCheckSumBySB(byte[] array){
+    public byte[] ByteArrayCheckSumBySB(byte[] array){
         int Sum = ByteArrayChecksum(array);
-        return ByteConvertHelper.IntegerToByteBySB(Sum);
+        return Converter.IntegerToByteBySB(Sum);
     }       
     
 }

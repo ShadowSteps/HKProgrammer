@@ -10,8 +10,8 @@ package com.shadows.hkprogrammer.core.messages.values;
  * @author John
  */
 public class PotmeterEndPoint {
-    private int Left;
-    private int Right;        
+    private int Left = 0;
+    private int Right = 0;        
     
     public int getLeft() {
         return Left;

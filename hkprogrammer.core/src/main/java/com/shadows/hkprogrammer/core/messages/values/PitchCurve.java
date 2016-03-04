@@ -10,8 +10,8 @@ package com.shadows.hkprogrammer.core.messages.values;
  * @author John
  */
 public class PitchCurve {
-    public int Normal;
-    public int ID;
+    public int Normal = 0;
+    public int ID = 0;
 
     public int getNormal() {
         return Normal;
