@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
  */
 public class ByteConvertHelperTest {
     
+    private ByteConvertHelper Converter = new ByteConvertHelper();
     public ByteConvertHelperTest() {
     }
     
@@ -35,7 +36,7 @@ public class ByteConvertHelperTest {
         System.out.println("MSB");
         byte[] value = { 0, 39, 0, 1 };
         byte expResult = 39;
-        byte result = ByteConvertHelper.MSB(value);
+        byte result = Converter.MSB(value);
         assertEquals(expResult, result);
     }
 
@@ -47,7 +48,7 @@ public class ByteConvertHelperTest {
         System.out.println("LSB");
         byte[] value = { 0, 39, 0, 1 };
         byte expResult = 1;
-        byte result = ByteConvertHelper.LSB(value);
+        byte result = Converter.LSB(value);
         assertEquals(expResult, result);
     }
 
@@ -59,7 +60,7 @@ public class ByteConvertHelperTest {
         System.out.println("ByteToString");
         byte[] value = { 97, 98, 99 };
         String expResult = "abc";
-        String result = ByteConvertHelper.ByteToString(value);
+        String result = Converter.ByteToString(value);
         assertEquals(expResult, result);        
     }
 
@@ -71,7 +72,7 @@ public class ByteConvertHelperTest {
         System.out.println("ByteToInteger");
         byte[] value = new byte[]{-2, -4, -8, -16};
         Integer expResult = -16975632;
-        Integer result = ByteConvertHelper.ByteToInteger(value);
+        Integer result = Converter.ByteToInteger(value);
         assertEquals(expResult, result);
     }
 
@@ -83,7 +84,7 @@ public class ByteConvertHelperTest {
         System.out.println("StringToByte");
         String value = "abc";
         byte[] expResult = { 97, 98, 99 };
-        byte[] result = ByteConvertHelper.StringToByte(value);
+        byte[] result = Converter.StringToByte(value);
         assertArrayEquals(expResult, result);
     }
 
@@ -95,7 +96,7 @@ public class ByteConvertHelperTest {
         System.out.println("IntegerToByte");
         int value = -16975632;
         byte[] expResult = new byte[]{ -2, -4, -8, -16 };
-        byte[] result = ByteConvertHelper.IntegerToByte(value);
+        byte[] result = Converter.IntegerToByte(value);
         assertArrayEquals(expResult, result);
     }
     
@@ -107,8 +108,41 @@ public class ByteConvertHelperTest {
         System.out.println("IntegerToByteBySB");
         int value = -16975632;
         byte[] expResult = new byte[]{-2, -16};
-        byte[] result = ByteConvertHelper.IntegerToByteBySB(value);
+        byte[] result = Converter.IntegerToByteBySB(value);
         assertArrayEquals(expResult, result);
     }
     
+     /**
+     * Test of BooleanToByte method, of class ByteConvertHelper.
+     */
+    @Test
+    public void testBooleanToByte() {
+        System.out.println("BooleanToByte");
+        boolean value = true,
+                falseValue = false;
+        byte[] expResult = new byte[]{ 0,0,0,(byte)1 },
+                expResultFalse = new byte[] { 0,0,0,(byte)0 };
+        byte[] result = Converter.BooleanToByte(value),
+                falseResult = Converter.BooleanToByte(falseValue);
+        assertArrayEquals(expResult, result);
+        assertArrayEquals(expResultFalse, falseResult);
+        
+    }
+    
+    /**
+     * Test of ByteToBoolean method, of class ByteConvertHelper.
+     */
+    @Test
+    public void testByteToBoolean() {
+        System.out.println("ByteToBoolean");
+        byte[] value = new byte[]{ 0,0,0,(byte)1 },
+                falseValue = new byte[] { 0,0,0,(byte)0 };
+        boolean expResult = true,
+                expResultFalse = false;
+        boolean result = Converter.ByteToBoolean(value),
+                falseResult = Converter.ByteToBoolean(falseValue);
+        assertTrue(result);
+        assertFalse(falseResult);
+        
+    }
 }

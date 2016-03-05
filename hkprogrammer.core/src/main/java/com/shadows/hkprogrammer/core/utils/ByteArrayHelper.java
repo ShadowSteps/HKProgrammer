@@ -9,7 +9,7 @@ package com.shadows.hkprogrammer.core.utils;
  *
  * @author John
  */
-public class ByteArrayHelper {
+class ByteArrayHelper {
     private final ByteConvertHelper Converter = new ByteConvertHelper();    
     public byte[] WriteToByteArray(byte[] message, byte[] part, int offset){       
         int length = part.length;        

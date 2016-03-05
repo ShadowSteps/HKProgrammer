@@ -27,7 +27,7 @@ public enum ControlChannel {
         return value;
     }
     
-    public ControlChannel fromInteger(int Integer){
+    public static ControlChannel fromInteger(int Integer){
         if (Integer > 5 || Integer < 0)
             throw new IllegalArgumentException("ControlChannel values ins between 0 and 5!");
         return ControlChannel.valueOf("Channel"+(Integer + 1));

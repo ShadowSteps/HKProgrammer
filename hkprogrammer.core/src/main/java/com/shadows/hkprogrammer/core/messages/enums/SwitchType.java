@@ -23,7 +23,7 @@ public enum SwitchType {
         return value;
     }
     
-    public SwitchType fromInteger(int Integer){
+    public static SwitchType fromInteger(int Integer){
         switch (Integer){
             case 0:
                 return SwitchA;

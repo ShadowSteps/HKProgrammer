@@ -24,7 +24,7 @@ public enum SwashChannel {
         return value;
     }
     
-    public SwashChannel fromInteger(int Integer){
+    public static SwashChannel fromInteger(int Integer){
         switch (Integer){
             case 0:
                 return CHANNEL1;

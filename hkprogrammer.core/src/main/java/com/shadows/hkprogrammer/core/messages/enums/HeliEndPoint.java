@@ -26,7 +26,7 @@ public enum HeliEndPoint {
         return value;
     }
     
-    public HeliEndPoint fromInteger(int Integer){
+    public static HeliEndPoint fromInteger(int Integer){
         if (Integer > 4 || Integer < 0)
             throw new IllegalArgumentException("HeliEndPoint values are between 0 and 4!");
         return HeliEndPoint.valueOf("EP"+(Integer));

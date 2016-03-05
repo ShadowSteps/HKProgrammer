@@ -23,7 +23,7 @@ public enum VRType {
         return value;
     }
     
-    public VRType fromInteger(int Integer){
+    public static VRType fromInteger(int Integer){
         switch (Integer){
             case 0:
                 return VRA;

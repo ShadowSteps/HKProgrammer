@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
  *
  * @author John
  */
-public class ByteConvertHelper {
+class ByteConvertHelper {
     public byte MSB(byte[] value){
         int index = 0;
         int length = value.length - 1;
@@ -57,5 +57,15 @@ public class ByteConvertHelper {
     public byte[] IntegerToByteBySB(int value){
         byte[] intBytes = IntegerToByte(value);
         return new byte[] { MSB(intBytes), LSB(intBytes) };
+    }
+    
+    public byte[] BooleanToByte(boolean value){
+        int intValue = value ? 1 : 0;
+        return IntegerToByte(intValue);
+    }
+
+    public boolean ByteToBoolean(byte[] Value) {
+        int intValue = ByteToInteger(Value);
+        return intValue == 1;
     }
 }

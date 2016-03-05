@@ -24,7 +24,7 @@ public enum DRChannel {
         return value;
     }
     
-    public DRChannel fromInteger(int Integer){
+    public static DRChannel fromInteger(int Integer){
         switch (Integer){
             case 0:
                 return DRChannel.CHANNEL1;
