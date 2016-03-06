@@ -10,16 +10,16 @@ package com.shadows.hkprogrammer.core.messages;
  * @author John
  */
 public class ParameterRequest {
-    private final int flag = 0;
+    private final boolean flag = false;
 
-    public int getFlag() {
+    public boolean getFlag() {
         return flag;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.flag;
+        hash = 97 * hash + (this.flag ? 1 : 0);
         return hash;
     }
 
@@ -37,6 +37,8 @@ public class ParameterRequest {
         }
         return true;
     }
+
+    
     
     
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shadows.hkprogrammer.tools.FXMLController">
+   <children>
+      <SplitPane dividerPositions="0.19908814589665655" prefHeight="384.0" prefWidth="660.0">
+        <items>
+          <AnchorPane prefHeight="160.0" prefWidth="100.0" style="-fx-border-radius: 0;">
+               <children>
+                  <Button fx:id="intToByteButton" onMouseClicked="#handleIntToByteClick"  mnemonicParsing="false" prefHeight="35.0" prefWidth="128.0" styleClass="menu-button" text="Integer To Byte Array" textOverrun="CLIP" />
+               </children>
+            </AnchorPane>
+          <AnchorPane fx:id="handlerPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

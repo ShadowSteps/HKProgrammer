@@ -12,7 +12,18 @@ import java.nio.charset.StandardCharsets;
  *
  * @author John
  */
-class ByteConvertHelper {
+public class ByteConvertHelper {
+    private byte[] TrimIntegerBytes(byte[] array){
+        int j = 0;
+        for( int i=0;  i<array.length;  i++ )
+        {
+            if (array[i] != 0||array.length-1 == i)
+                array[j++] = array[i];
+        }
+        byte[] newArray = new byte[j];
+        System.arraycopy( array, 0, newArray, 0, j );
+        return newArray;
+    }
     public byte MSB(byte[] value){
         int index = 0;
         int length = value.length - 1;
@@ -36,7 +47,7 @@ class ByteConvertHelper {
     public int ByteToInteger(byte[] value){
         if (value.length < 4){
             byte[] newValue = new byte[4];
-            System.arraycopy(value, 0, newValue, value.length, 4 - value.length);
+            System.arraycopy(value, 0, newValue, 4 - value.length, value.length);
             value = newValue;
         }
         return ByteBuffer.wrap(value).getInt();
@@ -46,13 +57,21 @@ class ByteConvertHelper {
         return value.getBytes(StandardCharsets.UTF_8);
     }
     
-    public byte[] IntegerToByte(int value){
-        return new byte[] {
+    public byte[] IntegerToByte(int value, boolean trim){
+        byte[] bytes =  new byte[] {
             (byte)(value >>> 24),
             (byte)(value >>> 16),
             (byte)(value >>> 8),
             (byte)value};
-    }               
+        if (trim)
+            return TrimIntegerBytes(bytes);
+        else 
+            return bytes;
+    }   
+    
+    public byte[] IntegerToByte(int value){
+        return IntegerToByte(value,false);
+    }         
     
     public byte[] IntegerToByteBySB(int value){
         byte[] intBytes = IntegerToByte(value);
@@ -61,7 +80,8 @@ class ByteConvertHelper {
     
     public byte[] BooleanToByte(boolean value){
         int intValue = value ? 1 : 0;
-        return IntegerToByte(intValue);
+        byte[] values = IntegerToByte(intValue,true);
+        return values;
     }
 
     public boolean ByteToBoolean(byte[] Value) {

@@ -12,6 +12,7 @@ import com.shadows.hkprogrammer.core.utils.ByteArray;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.shadows.hkprogrammer.core.messages.*;
 import static org.junit.Assert.*;
 
 /**
@@ -39,12 +40,20 @@ public class MessageHandlerTest {
         System.out.println("GetBytesForPositionValuesMessage");
         PositionValuesMessage message = new PositionValuesMessage();
         MessageHandler instance = new MessageHandler();
-        ByteArray expResult = new ByteArray(MessageHandlerConsts.msgPositionLength);
-        expResult.Write(new byte[] { MessageHandlerConsts.HeaderBeggining , MessageHandlerConsts.HeaderPosition });
+        ByteArray expResult = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderPosition,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            1, -12,
+            -1, 59
+        });
         ByteArray result = instance.GetBytesForPositionValuesMessage(message);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -53,13 +62,22 @@ public class MessageHandlerTest {
     @Test
     public void testGetPositionValuesMessageFromBytes() {
         System.out.println("GetPositionValuesMessageFromBytes");
-        ByteArray messageBytes = null;
+        ByteArray messageBytes = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderPosition,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            5, -36,
+            1, -12,
+            -1, 59
+        });
         MessageHandler instance = new MessageHandler();
-        PositionValuesMessage expResult = null;
+        PositionValuesMessage expResult = new PositionValuesMessage();
         PositionValuesMessage result = instance.GetPositionValuesMessageFromBytes(messageBytes);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -68,13 +86,15 @@ public class MessageHandlerTest {
     @Test
     public void testGetBytesForParameterRequestMessage() {
         System.out.println("GetBytesForParameterRequestMessage");
-        ParameterRequest message = null;
+        ParameterRequest message = new ParameterRequest();
         MessageHandler instance = new MessageHandler();
-        ByteArray expResult = null;
+        ByteArray expResult = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterRequest,
+            0
+        });
         ByteArray result = instance.GetBytesForParameterRequestMessage(message);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -83,13 +103,15 @@ public class MessageHandlerTest {
     @Test
     public void testGetParameterRequestMessageFromBytes() {
         System.out.println("GetParameterRequestMessageFromBytes");
-        ByteArray messageBytes = null;
+        ByteArray messageBytes = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterRequest,
+            0
+        });
         MessageHandler instance = new MessageHandler();
-        ParameterRequest expResult = null;
+        ParameterRequest expResult = new ParameterRequest();
         ParameterRequest result = instance.GetParameterRequestMessageFromBytes(messageBytes);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,13 +120,43 @@ public class MessageHandlerTest {
     @Test
     public void testGetBytesForParameterDumpMessage() {
         System.out.println("GetBytesForParameterDumpMessage");
-        ParameterMessage message = null;
+        ParameterMessage message = new ParameterMessage();
         MessageHandler instance = new MessageHandler();
-        ByteArray expResult = null;
+        ByteArray expResult = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterDump,
+            0, //TXModel/CraftType
+            0, //Reverse bitmark
+            0, 0, //DR CH1
+            0, 0, //DR CH2
+            0, 0, //DR CH4
+            0, 0, 0, //Swash
+            0, 0, //Endpoint CH1
+            0, 0, //Endpoint CH2
+            0, 0, //Endpoint CH3
+            0, 0, //Endpoint CH4
+            0, 0, //Endpoint CH5
+            0, 0, //Endpoint CH6
+            0, 0, //Throttle EP0
+            0, 0, //Throttle EP1
+            0, 0, //Throttle EP2
+            0, 0, //Throttle EP3
+            0, 0, //Throttle EP4
+            0, 0, //Pitch EP0
+            0, 0, //Pitch EP1
+            0, 0, //Pitch EP2
+            0, 0, //Pitch EP3
+            0, 0, //Pitch EP4
+            0, 0, 0, 0, 0, 0, // Subtrim
+            0, 0, 0, 3, // Mix 1
+            0, 0, 0, 3, // Mix 2
+            0, 0, 0, 3, // Mix 3
+            0, 0, //Switch function
+            0, 0, //VR functions
+            0, 9 //Checksum
+        });
         ByteArray result = instance.GetBytesForParameterDumpMessage(message);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -113,13 +165,43 @@ public class MessageHandlerTest {
     @Test
     public void testGetParameterDumpMessageFromBytes() {
         System.out.println("GetParameterDumpMessageFromBytes");
-        ByteArray messageBytes = null;
+        ByteArray messageBytes = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterDump,
+            0, //TXModel/CraftType
+            0, //Reverse bitmark
+            0, 0, //DR CH1
+            0, 0, //DR CH2
+            0, 0, //DR CH4
+            0, 0, 0, //Swash
+            0, 0, //Endpoint CH1
+            0, 0, //Endpoint CH2
+            0, 0, //Endpoint CH3
+            0, 0, //Endpoint CH4
+            0, 0, //Endpoint CH5
+            0, 0, //Endpoint CH6
+            0, 0, //Throttle EP0
+            0, 0, //Throttle EP1
+            0, 0, //Throttle EP2
+            0, 0, //Throttle EP3
+            0, 0, //Throttle EP4
+            0, 0, //Pitch EP0
+            0, 0, //Pitch EP1
+            0, 0, //Pitch EP2
+            0, 0, //Pitch EP3
+            0, 0, //Pitch EP4
+            0, 0, 0, 0, 0, 0, // Subtrim
+            0, 0, 0, 3, // Mix 1
+            0, 0, 0, 3, // Mix 2
+            0, 0, 0, 3, // Mix 3
+            0, 0, //Switch function
+            0, 0, //VR functions
+            0, 9 //Checksum
+        });
         MessageHandler instance = new MessageHandler();
-        ParameterMessage expResult = null;
+        ParameterMessage expResult = new ParameterMessage();
         ParameterMessage result = instance.GetParameterDumpMessageFromBytes(messageBytes);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -128,13 +210,43 @@ public class MessageHandlerTest {
     @Test
     public void testGetBytesForParameterSetMessage() {
         System.out.println("GetBytesForParameterSetMessage");
-        ParameterMessage message = null;
+        ParameterMessage message = new ParameterMessage();
         MessageHandler instance = new MessageHandler();
-        ByteArray expResult = null;
+        ByteArray expResult = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterSet,
+            0, //TXModel/CraftType
+            0, //Reverse bitmark
+            0, 0, //DR CH1
+            0, 0, //DR CH2
+            0, 0, //DR CH4
+            0, 0, 0, //Swash
+            0, 0, //Endpoint CH1
+            0, 0, //Endpoint CH2
+            0, 0, //Endpoint CH3
+            0, 0, //Endpoint CH4
+            0, 0, //Endpoint CH5
+            0, 0, //Endpoint CH6
+            0, 0, //Throttle EP0
+            0, 0, //Throttle EP1
+            0, 0, //Throttle EP2
+            0, 0, //Throttle EP3
+            0, 0, //Throttle EP4
+            0, 0, //Pitch EP0
+            0, 0, //Pitch EP1
+            0, 0, //Pitch EP2
+            0, 0, //Pitch EP3
+            0, 0, //Pitch EP4
+            0, 0, 0, 0, 0, 0, // Subtrim
+            0, 0, 0, 3, // Mix 1
+            0, 0, 0, 3, // Mix 2
+            0, 0, 0, 3, // Mix 3
+            0, 0, //Switch function
+            0, 0, //VR functions
+            0, 9 //Checksum
+        });
         ByteArray result = instance.GetBytesForParameterSetMessage(message);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -143,13 +255,43 @@ public class MessageHandlerTest {
     @Test
     public void testGetParameterSetMessageFromBytes() {
         System.out.println("GetParameterSetMessageFromBytes");
-        ByteArray messageBytes = null;
+        ByteArray messageBytes = ByteArray.FromByteArray(new byte[]{
+            MessageHandlerConsts.HeaderBeggining,
+            MessageHandlerConsts.HeaderParameterSet,
+            0, //TXModel/CraftType
+            0, //Reverse bitmark
+            0, 0, //DR CH1
+            0, 0, //DR CH2
+            0, 0, //DR CH4
+            0, 0, 0, //Swash
+            0, 0, //Endpoint CH1
+            0, 0, //Endpoint CH2
+            0, 0, //Endpoint CH3
+            0, 0, //Endpoint CH4
+            0, 0, //Endpoint CH5
+            0, 0, //Endpoint CH6
+            0, 0, //Throttle EP0
+            0, 0, //Throttle EP1
+            0, 0, //Throttle EP2
+            0, 0, //Throttle EP3
+            0, 0, //Throttle EP4
+            0, 0, //Pitch EP0
+            0, 0, //Pitch EP1
+            0, 0, //Pitch EP2
+            0, 0, //Pitch EP3
+            0, 0, //Pitch EP4
+            0, 0, 0, 0, 0, 0, // Subtrim
+            0, 0, 0, 3, // Mix 1
+            0, 0, 0, 3, // Mix 2
+            0, 0, 0, 3, // Mix 3
+            0, 0, //Switch function
+            0, 0, //VR functions
+            0, 9 //Checksum
+        });
         MessageHandler instance = new MessageHandler();
-        ParameterMessage expResult = null;
+        ParameterMessage expResult = new ParameterMessage();
         ParameterMessage result = instance.GetParameterSetMessageFromBytes(messageBytes);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

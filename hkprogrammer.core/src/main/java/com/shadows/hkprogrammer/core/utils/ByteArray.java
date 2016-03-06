@@ -28,10 +28,10 @@ public class ByteArray {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Arrays.hashCode(this.Value);
-        hash = 79 * hash + Objects.hashCode(this.ArrayTools);
-        hash = 79 * hash + Objects.hashCode(this.Convert);
+        int hash = 7;
+        hash = 97 * hash + Arrays.hashCode(this.Value);
+        hash = 97 * hash + this.length;
+        hash = 97 * hash + this.currentOffset;
         return hash;
     }
 
@@ -46,17 +46,15 @@ public class ByteArray {
         final ByteArray other = (ByteArray) obj;
         if (!Arrays.equals(this.Value, other.Value)) {
             return false;
-        }
-        if (!Objects.equals(this.ArrayTools, other.ArrayTools)) {
+        }       
+        if (this.length != other.length) {
             return false;
         }
-        if (!Objects.equals(this.Convert, other.Convert)) {
+        if (this.currentOffset != other.currentOffset) {
             return false;
         }
         return true;
-    }
-    
-    
+    }            
     
     public static ByteArray FromByteArray(byte[] Array){
         ByteArray newArray = new ByteArray(Array.length);
@@ -82,25 +80,29 @@ public class ByteArray {
         this.Write(chunk, currentOffset);        
     }
     
-    public void Write(int chunk,int offset,boolean convertInt){
+    public void Write(int chunk,int offset,boolean convertInt,boolean trimInteger){
         byte[] Integer;
         if (convertInt)
             Integer = Convert.IntegerToByteBySB(chunk);
         else
-            Integer = Convert.IntegerToByte(chunk);
+            Integer = Convert.IntegerToByte(chunk, trimInteger);
         this.Write(Integer, offset);
     }
     
-    public void Write(int chunk,boolean convertInt){
-        this.Write(chunk, currentOffset, convertInt);
+    public void Write(int chunk, boolean convertInt, boolean trimInteger){
+        this.Write(chunk, currentOffset, convertInt,trimInteger);
     }
     
-    public void Write(int chunk,int offset){
-        this.Write(chunk, offset, false);
+    public void Write(int chunk,int offset,boolean trimInteger){
+        this.Write(chunk, offset, false, trimInteger);
+    }
+    
+    public void Write(int chunk, boolean trimInteger){
+        this.Write(chunk, false, trimInteger);
     }
     
     public void Write(int chunk){
-        this.Write(chunk, false);
+        this.Write(chunk, false, true);
     }
     
     public void Write(String chunk,int offset){

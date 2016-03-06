@@ -1,0 +1,7 @@
+.button {
+    -fx-font-weight: bold;
+}
+
+.menu-button{
+    -fx-border-radius: 0;
+}

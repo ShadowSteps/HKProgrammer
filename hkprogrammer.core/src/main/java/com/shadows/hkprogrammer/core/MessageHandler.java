@@ -24,6 +24,7 @@ import com.shadows.hkprogrammer.core.messages.enums.VRType;
 import com.shadows.hkprogrammer.core.messages.values.*;
 import com.shadows.hkprogrammer.core.utils.*;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -44,7 +45,7 @@ public class MessageHandler {
     private void CreateCheckSumToByteArray(ByteArray array){
         ByteArray payload = array.Read(2, array.Length() - 4);
         ByteArray Checksum = payload.ChecksumBySB();
-        Checksum.Write(Checksum, 2 + payload.Length());       
+        array.Write(Checksum, 2 + payload.Length());       
     }
     
     private void WritePayloadOfPositionMessage(PositionValuesMessage message,ByteArray messageBytes){
@@ -174,7 +175,8 @@ public class MessageHandler {
     private ParameterMessage CreateParameterMessageFromBytes(ByteArray msgBytes){
         ByteArray Payload = msgBytes.Read(2, msgBytes.length - 4);
         ParameterMessage message = new ParameterMessage();
-        String BaseTypes = Integer.toBinaryString(Payload.Read(0, 1).ToInteger());
+        String BaseTypesValue = Integer.toBinaryString(Payload.Read(0, 1).ToInteger());
+        String BaseTypes = StringUtils.leftPad(BaseTypesValue, 8, '0');
         message.setTXModelType(
                 TXModel.fromInteger(Integer.parseInt(BaseTypes.substring(0, 4)))
         );

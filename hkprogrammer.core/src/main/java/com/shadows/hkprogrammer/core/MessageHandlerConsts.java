@@ -17,6 +17,6 @@ public class MessageHandlerConsts {
     public static final byte HeaderParameterSet = (byte)0xFF;
     public static final int msgPositionLength = 18;
     public static final int msgParameterRequestLength = 3;
-    public static final int msgParameterDumpLength = 68;
-    public static final int msgParameterSetLength = 68;
+    public static final int msgParameterDumpLength = 69;
+    public static final int msgParameterSetLength = 69;
 }
