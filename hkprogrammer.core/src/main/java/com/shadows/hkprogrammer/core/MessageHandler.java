@@ -181,7 +181,7 @@ public class MessageHandler {
                 TXModel.fromInteger(Integer.parseInt(BaseTypes.substring(0, 4)))
         );
         message.setCraftTypeNum(
-                CraftType.fromInteger(Integer.parseInt(BaseTypes.substring(4, 4)))
+                CraftType.fromInteger(Integer.parseInt(BaseTypes.substring(4, 8)))
         );
         message.setReverseBitmask(Payload.Read(1, 1).ToBoolean());        
         for (int i = 0; i < 3; i++) {
@@ -190,15 +190,15 @@ public class MessageHandler {
             message.setDRValueForChannel(DRChannel.fromInteger(i), onValue, offValue);
             int swash = Payload.Read(8 + i, 1).ToInteger();
             message.setSwashValueForChannel(SwashChannel.fromInteger(i), swash);
-            
-            String mixCommunication = 
-                    Integer.toBinaryString(Payload.Read(49 + i*4, 1).ToInteger());
+            String mixCommunicationValue = Integer.toBinaryString(Payload.Read(49 + i*4, 1).ToInteger());
+            String mixCommunication = StringUtils.leftPad(mixCommunicationValue, 8, '0');
+                    
             int mixUprate = Payload.Read(50 + i*4, 1).ToInteger(),
                     mixDownrate = Payload.Read(51 + i*4, 1).ToInteger(),
                     mixSwitch = Payload.Read(52 + i*4, 1).ToInteger();
             message.setMixSettingsValue(
-                    i, 
-                    MixDestination.fromInteger(Integer.parseInt(mixCommunication.substring(4, 4), 2)), 
+                    i+1, 
+                    MixDestination.fromInteger(Integer.parseInt(mixCommunication.substring(4, 8), 2)), 
                     MixSource.fromInteger(Integer.parseInt(mixCommunication.substring(0, 4), 2)), 
                     MixSwitch.fromInteger(mixSwitch), 
                     mixDownrate, 

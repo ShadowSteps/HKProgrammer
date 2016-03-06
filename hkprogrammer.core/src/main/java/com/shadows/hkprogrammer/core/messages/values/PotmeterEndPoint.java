@@ -12,7 +12,33 @@ package com.shadows.hkprogrammer.core.messages.values;
 public class PotmeterEndPoint {
     private int Left = 0;
     private int Right = 0;        
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.Left;
+        hash = 53 * hash + this.Right;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PotmeterEndPoint other = (PotmeterEndPoint) obj;
+        if (this.Left != other.Left) {
+            return false;
+        }
+        if (this.Right != other.Right) {
+            return false;
+        }
+        return true;
+    }
+        
     public int getLeft() {
         return Left;
     }

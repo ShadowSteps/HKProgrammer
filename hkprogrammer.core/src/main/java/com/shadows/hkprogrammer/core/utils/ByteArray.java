@@ -16,7 +16,7 @@ public class ByteArray {
     private byte[] Value;
     private final ByteArrayHelper ArrayTools = new ByteArrayHelper();
     private final ByteConvertHelper Convert = new ByteConvertHelper();
-    public final int length;
+    public final int length;    
     private int currentOffset = 0;
         
     public ByteArray(int length) {
@@ -157,5 +157,9 @@ public class ByteArray {
     
     public boolean ToBoolean(){
         return Convert.ByteToBoolean(Value);
+    }
+    
+    public boolean isEmpty(){
+        return this.Value.length == 0;
     }
 }

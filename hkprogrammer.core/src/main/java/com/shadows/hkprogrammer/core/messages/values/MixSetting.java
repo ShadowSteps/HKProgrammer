@@ -8,6 +8,7 @@ package com.shadows.hkprogrammer.core.messages.values;
 import com.shadows.hkprogrammer.core.messages.enums.MixDestination;
 import com.shadows.hkprogrammer.core.messages.enums.MixSource;
 import com.shadows.hkprogrammer.core.messages.enums.MixSwitch;
+import java.util.Objects;
 
 /**
  *
@@ -20,6 +21,45 @@ public class MixSetting {
     private int Downrate = 0;
     private MixSwitch Switch = MixSwitch.OFF;
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.Source);
+        hash = 73 * hash + Objects.hashCode(this.Destination);
+        hash = 73 * hash + this.Uprate;
+        hash = 73 * hash + this.Downrate;
+        hash = 73 * hash + Objects.hashCode(this.Switch);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MixSetting other = (MixSetting) obj;
+        if (this.Source != other.Source) {
+            return false;
+        }
+        if (this.Destination != other.Destination) {
+            return false;
+        }
+        if (this.Uprate != other.Uprate) {
+            return false;
+        }
+        if (this.Downrate != other.Downrate) {
+            return false;
+        }
+        if (this.Switch != other.Switch) {
+            return false;
+        }
+        return true;
+    }
+
+    
     public MixSource getSource() {
         return Source;
     }

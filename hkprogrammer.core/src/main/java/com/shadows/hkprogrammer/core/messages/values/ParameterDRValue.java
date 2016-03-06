@@ -13,6 +13,32 @@ public class ParameterDRValue {
     private int OnValue = 0;
     private int OffValue = 0;
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.OnValue;
+        hash = 41 * hash + this.OffValue;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ParameterDRValue other = (ParameterDRValue) obj;
+        if (this.OnValue != other.OnValue) {
+            return false;
+        }
+        if (this.OffValue != other.OffValue) {
+            return false;
+        }
+        return true;
+    }   
+    
     public int getOnValue() {
         return OnValue;
     }

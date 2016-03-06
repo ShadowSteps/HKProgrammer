@@ -24,6 +24,7 @@ import com.shadows.hkprogrammer.core.messages.values.PitchCurve;
 import com.shadows.hkprogrammer.core.messages.values.PotmeterEndPoint;
 import com.shadows.hkprogrammer.core.messages.values.ThrottleCurve;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -54,6 +55,74 @@ public class ParameterMessage {
         Arrays.fill(SwitchFunctions, SwitchFunction.Unassigned);
         Arrays.fill(VRModes, VRFunction.Unassigned);
     }    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.TXModelType);
+        hash = 47 * hash + Objects.hashCode(this.CraftTypeNum);
+        hash = 47 * hash + (this.ReverseBitmask ? 1 : 0);
+        hash = 47 * hash + Arrays.deepHashCode(this.DRValues);
+        hash = 47 * hash + Arrays.hashCode(this.Swash);
+        hash = 47 * hash + Arrays.deepHashCode(this.EndPoints);
+        hash = 47 * hash + Arrays.deepHashCode(this.ThrottleCurves);
+        hash = 47 * hash + Arrays.deepHashCode(this.PitchCurves);
+        hash = 47 * hash + Arrays.hashCode(this.Subtrim);
+        hash = 47 * hash + Arrays.deepHashCode(this.Mixes);
+        hash = 47 * hash + Arrays.deepHashCode(this.SwitchFunctions);
+        hash = 47 * hash + Arrays.deepHashCode(this.VRModes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ParameterMessage other = (ParameterMessage) obj;
+        if (this.TXModelType != other.TXModelType) {
+            return false;
+        }
+        if (this.CraftTypeNum != other.CraftTypeNum) {
+            return false;
+        }
+        if (this.ReverseBitmask != other.ReverseBitmask) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.DRValues, other.DRValues)) {
+            return false;
+        }
+        if (!Arrays.equals(this.Swash, other.Swash)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.EndPoints, other.EndPoints)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.ThrottleCurves, other.ThrottleCurves)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.PitchCurves, other.PitchCurves)) {
+            return false;
+        }
+        if (!Arrays.equals(this.Subtrim, other.Subtrim)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.Mixes, other.Mixes)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.SwitchFunctions, other.SwitchFunctions)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.VRModes, other.VRModes)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     public TXModel getTXModelType() {
         return TXModelType;

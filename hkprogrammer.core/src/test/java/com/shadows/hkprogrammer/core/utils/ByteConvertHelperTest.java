@@ -120,8 +120,8 @@ public class ByteConvertHelperTest {
         System.out.println("BooleanToByte");
         boolean value = true,
                 falseValue = false;
-        byte[] expResult = new byte[]{ 0,0,0,(byte)1 },
-                expResultFalse = new byte[] { 0,0,0,(byte)0 };
+        byte[] expResult = new byte[]{ (byte)1 },
+                expResultFalse = new byte[] {(byte)0 };
         byte[] result = Converter.BooleanToByte(value),
                 falseResult = Converter.BooleanToByte(falseValue);
         assertArrayEquals(expResult, result);
@@ -135,8 +135,8 @@ public class ByteConvertHelperTest {
     @Test
     public void testByteToBoolean() {
         System.out.println("ByteToBoolean");
-        byte[] value = new byte[]{ 0,0,0,(byte)1 },
-                falseValue = new byte[] { 0,0,0,(byte)0 };
+        byte[] value = new byte[]{ (byte)1 },
+                falseValue = new byte[] { (byte)0 };
         boolean expResult = true,
                 expResultFalse = false;
         boolean result = Converter.ByteToBoolean(value),

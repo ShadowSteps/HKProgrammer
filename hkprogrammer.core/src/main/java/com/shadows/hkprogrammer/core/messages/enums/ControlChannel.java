@@ -30,7 +30,7 @@ public enum ControlChannel {
     public static ControlChannel fromInteger(int Integer){
         if (Integer > 5 || Integer < 0)
             throw new IllegalArgumentException("ControlChannel values ins between 0 and 5!");
-        return ControlChannel.valueOf("Channel"+(Integer + 1));
+        return ControlChannel.valueOf("CHANNEL"+(Integer + 1));
     }
 
 }

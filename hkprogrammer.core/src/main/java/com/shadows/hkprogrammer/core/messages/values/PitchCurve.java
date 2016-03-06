@@ -13,6 +13,32 @@ public class PitchCurve {
     public int Normal = 0;
     public int ID = 0;
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.Normal;
+        hash = 37 * hash + this.ID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PitchCurve other = (PitchCurve) obj;
+        if (this.Normal != other.Normal) {
+            return false;
+        }
+        if (this.ID != other.ID) {
+            return false;
+        }
+        return true;
+    }   
+    
     public int getNormal() {
         return Normal;
     }

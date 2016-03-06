@@ -13,6 +13,32 @@ public class ThrottleCurve {
     private int Normal = 0;
     private int ID = 0;
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.Normal;
+        hash = 71 * hash + this.ID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ThrottleCurve other = (ThrottleCurve) obj;
+        if (this.Normal != other.Normal) {
+            return false;
+        }
+        if (this.ID != other.ID) {
+            return false;
+        }
+        return true;
+    }
+    
     public int getNormal() {
         return Normal;
     }
