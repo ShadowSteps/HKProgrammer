@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="160.0" prefWidth="332.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shadows.hkprogrammer.windows.SelectProviderController">
+    <stylesheets>
+        <URL value="@/styles/selectprovider.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Connection Type:" />
+      <ChoiceBox fx:id="connectionTypeDropDown" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="306.0" />
+      <Label layoutX="14.0" layoutY="64.0" text="COM Port/Connection Partner:" />
+      <ChoiceBox fx:id="comPortDropDown" layoutX="14.0" layoutY="85.0" prefHeight="25.0" prefWidth="306.0" />
+      <Button fx:id="cancelButton" onMouseClicked="#cancelButtonClick" layoutX="272.0" layoutY="121.0" mnemonicParsing="false" text="Отказ" />
+      <Button fx:id="syncButton" layoutX="187.0" layoutY="121.0" mnemonicParsing="false" text="Свържи се" />
+   </children>
+</AnchorPane>

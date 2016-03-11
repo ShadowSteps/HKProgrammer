@@ -5,6 +5,8 @@
  */
 package com.shadows.hkprogrammer.core.communication;
 
+import java.io.IOException;
+
 /**
  *
  * @author John
@@ -14,5 +16,6 @@ public interface ICommunicationProvider {
     void CloseConnection();
     byte[] ReadPositionValues();
     byte[] ReadParameterDumpValues();    
-    void Write(byte[] message);
+    void Write(byte[] message) throws IOException;
+    String[] GetListOfPorts();
 }

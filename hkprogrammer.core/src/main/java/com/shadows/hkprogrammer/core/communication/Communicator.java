@@ -9,6 +9,7 @@ import com.shadows.hkprogrammer.core.MessageHandler;
 import com.shadows.hkprogrammer.core.messages.ParameterMessage;
 import com.shadows.hkprogrammer.core.messages.ParameterRequest;
 import com.shadows.hkprogrammer.core.utils.ByteArray;
+import java.io.IOException;
 
 /**
  *
@@ -38,13 +39,13 @@ public class Communicator {
             Status.Parameters = Handler.GetParameterDumpMessageFromBytes(parameterBytes);
     }
     
-    public void RequestParametersDump(){
+    public void RequestParametersDump() throws IOException{
         ParameterRequest Request = new ParameterRequest();
         ByteArray bytes = Handler.GetBytesForParameterRequestMessage(Request);
         Provider.Write(bytes.ToPrimitive());
     }
     
-    public void SetParameters(ParameterMessage parameters){
+    public void SetParameters(ParameterMessage parameters) throws IOException{
         ByteArray bytes = Handler.GetBytesForParameterSetMessage(parameters);
         Provider.Write(bytes.ToPrimitive());
     }
