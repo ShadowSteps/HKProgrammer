@@ -5,8 +5,10 @@
  */
 package com.shadows.hkprogrammer.windows.core.providers;
 
+import com.shadows.hkprogrammer.core.utils.ByteArray;
 import gnu.io.SerialPortEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,34 +81,6 @@ public class UsbConnectionProviderTest {
     }
 
     /**
-     * Test of ReadPositionValues method, of class UsbConnectionProvider.
-     */
-    @Test
-    public void testReadPositionValues() throws IOException {
-        System.out.println("ReadPositionValues");
-        UsbConnectionProvider instance = new UsbConnectionProvider();
-        byte[] expResult = null;
-        byte[] result = instance.ReadPositionValues();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of ReadParameterDumpValues method, of class UsbConnectionProvider.
-     */
-    @Test
-    public void testReadParameterDumpValues() throws IOException {
-        System.out.println("ReadParameterDumpValues");
-        UsbConnectionProvider instance = new UsbConnectionProvider();
-        byte[] expResult = null;
-        byte[] result = instance.ReadParameterDumpValues();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of Write method, of class UsbConnectionProvider.
      */
     @Test
@@ -114,20 +88,21 @@ public class UsbConnectionProviderTest {
         System.out.println("Write");
         byte[] message = null;
         UsbConnectionProvider instance = new UsbConnectionProvider();
-        instance.Write(message);
+        instance.Write(ByteArray.FromByteArray(message));
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
      * Test of GetListOfPorts method, of class UsbConnectionProvider.
+     * @throws java.io.IOException
      */
     @Test
     public void testGetListOfPorts() throws IOException {
         System.out.println("GetListOfPorts");
         UsbConnectionProvider instance = new UsbConnectionProvider();        
-        String[] result = instance.GetListOfPorts();
-        assertTrue(result.length > 0);
+        ArrayList<String> result = instance.GetListOfPorts();
+        assertTrue(result.size() > 0);
         System.out.println(result);
     }
     

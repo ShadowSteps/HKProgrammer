@@ -6,6 +6,7 @@
 package com.shadows.hkprogrammer.windows.core.providers;
 
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
+import com.shadows.hkprogrammer.core.utils.ByteArray;
 import com.shadows.hkprogrammer.windows.core.OSDetector;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
@@ -16,9 +17,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -29,10 +32,10 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
     private OutputStream writeOutputStream;
     private final int PORT_TIMEOUT = 2000;
     private SerialPort serialPort;
-    protected LinkedBlockingQueue<Byte> receivedBytes;
-    public UsbConnectionProvider() throws IOException {
-        
-        receivedBytes = new LinkedBlockingQueue<>(100000);
+    protected ByteArray receivedBytesBuffer;    
+    private ByteArray currentMessage;
+    public UsbConnectionProvider() throws IOException {        
+        receivedBytesBuffer = new ByteArray(1024);  
         /*String port = "COM1";
         Enumeration<?> portList = CommPortIdentifier.getPortIdentifiers();
         boolean portFound = false;
@@ -84,44 +87,25 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
             writeOutputStream.close();
         } catch (IOException e) {
         }
-    }
+    }    
     
     @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
-
-            case SerialPortEvent.BI:
-            case SerialPortEvent.OE:
-            case SerialPortEvent.FE:
-            case SerialPortEvent.PE:
-            case SerialPortEvent.CD:
-            case SerialPortEvent.CTS:
-            case SerialPortEvent.DSR:
-            case SerialPortEvent.RI:
-            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                //nothing to do...
-                break;
-
             case SerialPortEvent.DATA_AVAILABLE:
-                byte received = -1;
-                do {
-                    try {
-                        received = (byte) inputStream.read();
-                    } catch (IOException e) {
-                        System.err.println("Error reading USB:" + e.getMessage());
-                    }
+                receivedBytesBuffer = new ByteArray(1024);
+                int total = 0;
+                int received = -1;
+                try {
+                    do {
+                        byte[] buffer = new byte[64];
+                        received = inputStream.read(buffer);
+                        total+=received;
+                        receivedBytesBuffer.Write(buffer);
+                    } while (received != -1);
 
-                    synchronized (receivedBytes) {
-                        try {
-                            receivedBytes.add(received);
-                        } catch (IllegalStateException ew) {
-                            System.err.println(ew.getMessage());
-                            receivedBytes.poll();
-                            receivedBytes.add(received);
-                        }
-                    }
-                } while (received != -1);
-
+                } catch (IOException ex) {
+                }  
                 break;
         }
     }
@@ -137,25 +121,15 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
     }
 
     @Override
-    public byte[] ReadPositionValues() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public byte[] ReadParameterDumpValues() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void Write(byte[] message) throws IOException {        
-        writeOutputStream.write(message);
+    public void Write(ByteArray message) throws IOException {        
+        writeOutputStream.write(message.ToPrimitive());
         writeOutputStream.flush();
     }
 
     @Override
-    public String[] GetListOfPorts() {
+    public ArrayList<String> GetListOfPorts() {
         Enumeration<?> portList = CommPortIdentifier.getPortIdentifiers();
-        ArrayList<String> portsArray = new ArrayList();
+        ArrayList<String> portsArray = new ArrayList<String>();
         CommPortIdentifier portId;
         while (portList.hasMoreElements()) {
             portId = (CommPortIdentifier) portList.nextElement();
@@ -163,6 +137,11 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
                 portsArray.add(portId.getName());
             }
         }
-        return (String[])portsArray.toArray();
+        return portsArray;
+    }
+
+    @Override
+    public ByteArray Read() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

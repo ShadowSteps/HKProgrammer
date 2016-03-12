@@ -5,7 +5,9 @@
  */
 package com.shadows.hkprogrammer.core.communication;
 
+import com.shadows.hkprogrammer.core.utils.ByteArray;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,8 +16,7 @@ import java.io.IOException;
 public interface ICommunicationProvider {
     void OpenConnection();
     void CloseConnection();
-    byte[] ReadPositionValues();
-    byte[] ReadParameterDumpValues();    
-    void Write(byte[] message) throws IOException;
-    String[] GetListOfPorts();
+    ByteArray Read() throws IOException; 
+    void Write(ByteArray message) throws IOException;
+    ArrayList<String> GetListOfPorts();
 }

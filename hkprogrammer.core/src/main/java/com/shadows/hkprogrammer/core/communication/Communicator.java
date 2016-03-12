@@ -6,10 +6,12 @@
 package com.shadows.hkprogrammer.core.communication;
 
 import com.shadows.hkprogrammer.core.MessageHandler;
+import com.shadows.hkprogrammer.core.MessageHandlerConsts;
 import com.shadows.hkprogrammer.core.messages.ParameterMessage;
 import com.shadows.hkprogrammer.core.messages.ParameterRequest;
 import com.shadows.hkprogrammer.core.utils.ByteArray;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  *
@@ -20,6 +22,19 @@ public class Communicator {
     private final ICommunicationProvider Provider;
     private final CommunicationStatus Status = new CommunicationStatus();
     
+    private final ByteArray PositionsHeader = ByteArray.FromByteArray(
+            new byte[] { 
+                MessageHandlerConsts.HeaderBeggining,
+                MessageHandlerConsts.HeaderPosition
+            }
+    );
+    private final ByteArray ParametersHeader = ByteArray.FromByteArray(
+            new byte[] { 
+                MessageHandlerConsts.HeaderBeggining,
+                MessageHandlerConsts.HeaderParameterDump
+            }
+    );
+    
     public Communicator(ICommunicationProvider provider){
         this.Provider = provider;
     }
@@ -28,25 +43,26 @@ public class Communicator {
         return Status;
     }
          
-    public void SyncStatus(){
-        byte[] positionInitialBytes = Provider.ReadPositionValues();
-        byte[] parameterInitialBytes = Provider.ReadParameterDumpValues();
-        ByteArray positionBytes = ByteArray.FromByteArray(positionInitialBytes),
-                parameterBytes = ByteArray.FromByteArray(parameterInitialBytes);
-        if (!positionBytes.isEmpty())
-            Status.Positions = Handler.GetPositionValuesMessageFromBytes(positionBytes);
-        if (!parameterBytes.isEmpty())
-            Status.Parameters = Handler.GetParameterDumpMessageFromBytes(parameterBytes);
+    public void Sync() throws IOException{
+        ByteArray readBytes = Provider.Read();
+        if (!readBytes.isEmpty()){
+            ByteArray Header = readBytes.Read(0, 2);        
+            if (Objects.equals(Header, PositionsHeader)){
+                Status.Positions = Handler.GetPositionValuesMessageFromBytes(readBytes);
+            } else if (Objects.equals(Header, ParametersHeader)){
+                Status.Parameters = Handler.GetParameterDumpMessageFromBytes(readBytes);
+            }
+        }
     }
     
     public void RequestParametersDump() throws IOException{
         ParameterRequest Request = new ParameterRequest();
         ByteArray bytes = Handler.GetBytesForParameterRequestMessage(Request);
-        Provider.Write(bytes.ToPrimitive());
+        Provider.Write(bytes);
     }
     
     public void SetParameters(ParameterMessage parameters) throws IOException{
         ByteArray bytes = Handler.GetBytesForParameterSetMessage(parameters);
-        Provider.Write(bytes.ToPrimitive());
+        Provider.Write(bytes);
     }
 }
