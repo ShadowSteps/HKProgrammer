@@ -11,7 +11,7 @@ package com.shadows.hkprogrammer.core.utils;
  */
 class ByteArrayHelper {
     private final ByteConvertHelper Converter = new ByteConvertHelper();    
-    public byte[] WriteToByteArray(byte[] message, byte[] part, int offset){       
+    public byte[] WriteToByteArray(byte[] message, byte[] part, int offset) throws ArrayIndexOutOfBoundsException{       
         int length = part.length;        
         if ((offset + length) > message.length)
             throw new ArrayIndexOutOfBoundsException("Part length is more then the space available for write in message from given offset!");
@@ -19,7 +19,7 @@ class ByteArrayHelper {
         return message;
     }
     
-    public byte[] ReadFromByteArray(byte[] message, int offset, int length){
+    public byte[] ReadFromByteArray(byte[] message, int offset, int length) throws ArrayIndexOutOfBoundsException{
         if ((offset + length) > message.length)
             throw new ArrayIndexOutOfBoundsException("Part length is more then the space available fore read in message from given offset!");
         byte[] part = new byte[length];

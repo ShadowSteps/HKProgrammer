@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 public class ConnectionTypesList {
     public static ObservableList<String> init(){
         return FXCollections.observableArrayList(
-                "Usb COM port",
+                "USB COM port",
                 "Bluetooth"
         );
     }

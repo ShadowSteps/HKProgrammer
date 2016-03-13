@@ -17,6 +17,6 @@
       <Button layoutX="16.0" onMouseClicked="#handleIntToByteArray"  layoutY="62.0" mnemonicParsing="false" text="Integer To Byte Array" />
       <TextArea layoutX="16.0" layoutY="106.0" fx:id="byteToIntInput" prefHeight="207.0" prefWidth="327.0" />
       <Label layoutX="16.0" layoutY="89.0" text="Byte array:" />
-      <Button layoutX="18.0" layoutY="320.0" mnemonicParsing="false" text="Byte Array To Integer" />
+      <Button layoutX="18.0" layoutY="320.0" onMouseClicked="#handleByteArrayToInt"  mnemonicParsing="false" text="Byte Array To Integer" />
    </children>
 </AnchorPane>

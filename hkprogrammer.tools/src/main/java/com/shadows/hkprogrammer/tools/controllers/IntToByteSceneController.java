@@ -43,5 +43,9 @@ public class IntToByteSceneController implements Initializable {
         byte[] byteValue = convert.IntegerToByte(value);
         valuesHelper.WriteByteArrayToTextArea(byteToIntInput, byteValue);
     }
+     @FXML
+    private void handleByteArrayToInt(Event event){        
+        intToByteInput.setText(valuesHelper.ReadByteArrayFromTextArea(byteToIntInput, convert).toString());
+    }
     
 }

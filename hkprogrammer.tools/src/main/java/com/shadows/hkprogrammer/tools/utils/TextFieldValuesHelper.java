@@ -5,6 +5,8 @@
  */
 package com.shadows.hkprogrammer.tools.utils;
 
+import com.shadows.hkprogrammer.core.utils.ByteArray;
+import com.shadows.hkprogrammer.core.utils.ByteConvertHelper;
 import javafx.scene.control.TextArea;
 
 /**
@@ -19,5 +21,16 @@ public class TextFieldValuesHelper {
         text = StringUtils.trimEnd(text, ',');
         text += "\n" + "};";
         area.setText(text);
+    }
+    public Integer ReadByteArrayFromTextArea(TextArea area,ByteConvertHelper convert){
+        String text = area.getText();
+        text = text.replace("new byte[] {\n", "");
+        text = text.replace("\n" + "};", "");
+        String[] values = text.split(",\n");
+        ByteArray barray = new ByteArray(values.length);
+        for(String value : values){
+            barray.Write(new byte[]{(byte)Integer.parseInt(value.replace("\t", "").trim())});
+        }
+        return barray.ToInteger();
     }
 }

@@ -12,7 +12,6 @@ import com.shadows.hkprogrammer.core.utils.ByteArray;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.shadows.hkprogrammer.core.messages.*;
 import static org.junit.Assert.*;
 
 /**
@@ -50,7 +49,7 @@ public class MessageHandlerTest {
             5, -36,
             5, -36,
             1, -12,
-            -1, 59
+            37, 28
         });
         ByteArray result = instance.GetBytesForPositionValuesMessage(message);
         assertEquals(expResult, result);
@@ -72,7 +71,7 @@ public class MessageHandlerTest {
             5, -36,
             5, -36,
             1, -12,
-            -1, 59
+            37, 28
         });
         MessageHandler instance = new MessageHandler();
         PositionValuesMessage expResult = new PositionValuesMessage();

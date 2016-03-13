@@ -17,10 +17,15 @@ import java.util.Objects;
  *
  * @author John
  */
-public class Communicator {
+public final class Communicator {
     private final MessageHandler Handler = new MessageHandler();
     private final ICommunicationProvider Provider;
     private final CommunicationStatus Status = new CommunicationStatus();
+    private boolean parametersSync = false;
+    
+    public boolean isParametersSync(){
+        return this.parametersSync;
+    }
     
     private final ByteArray PositionsHeader = ByteArray.FromByteArray(
             new byte[] { 
@@ -35,33 +40,52 @@ public class Communicator {
             }
     );
     
-    public Communicator(ICommunicationProvider provider){
-        this.Provider = provider;
+    public Communicator(ICommunicationProvider provider) throws IOException, InterruptedException{
+        if (!provider.isConnectionOpened())
+            throw new IOException("Cannot craete Communicator while connection with provider is not established!");
+        this.Provider = provider;   
+        ParametersSync();
     }
-
+    
     public CommunicationStatus getStatus() {
         return Status;
-    }
-         
+    }         
+    
     public void Sync() throws IOException{
-        ByteArray readBytes = Provider.Read();
-        if (!readBytes.isEmpty()){
+        ByteArray readBytes;
+        while (!(readBytes= Provider.Read()).isEmpty()){
             ByteArray Header = readBytes.Read(0, 2);        
             if (Objects.equals(Header, PositionsHeader)){
                 Status.Positions = Handler.GetPositionValuesMessageFromBytes(readBytes);
             } else if (Objects.equals(Header, ParametersHeader)){
                 Status.Parameters = Handler.GetParameterDumpMessageFromBytes(readBytes);
+                parametersSync = true;
             }
         }
     }
     
-    public void RequestParametersDump() throws IOException{
+    public void ParametersSync() throws IOException, InterruptedException {
+        RequestParametersDump();        
+        for (int i = 0; i < 5; i++) {
+            Thread.sleep(i*1000);
+            Sync();
+            if (parametersSync)
+                break;
+        }
+        if (!parametersSync)
+            throw new IOException("Could not sync parameters!");
+    }
+    
+    public final void RequestParametersDump() throws IOException{
+        parametersSync = false;
         ParameterRequest Request = new ParameterRequest();
         ByteArray bytes = Handler.GetBytesForParameterRequestMessage(Request);
         Provider.Write(bytes);
     }
     
-    public void SetParameters(ParameterMessage parameters) throws IOException{
+    public final void SetParameters(ParameterMessage parameters) throws IOException{
+        if (!parametersSync)
+            throw new IllegalStateException("Cannot write parameter when they are not synced!");
         ByteArray bytes = Handler.GetBytesForParameterSetMessage(parameters);
         Provider.Write(bytes);
     }

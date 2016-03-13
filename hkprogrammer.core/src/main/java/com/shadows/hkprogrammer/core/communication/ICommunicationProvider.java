@@ -14,9 +14,10 @@ import java.util.ArrayList;
  * @author John
  */
 public interface ICommunicationProvider {
-    void OpenConnection();
+    void OpenConnection(String SelectedPort) throws IOException;
     void CloseConnection();
     ByteArray Read() throws IOException; 
     void Write(ByteArray message) throws IOException;
     ArrayList<String> GetListOfPorts();
+    public boolean isConnectionOpened();
 }

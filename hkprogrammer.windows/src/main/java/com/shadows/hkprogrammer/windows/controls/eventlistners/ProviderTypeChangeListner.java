@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.windows.listners;
+package com.shadows.hkprogrammer.windows.controls.eventlistners;
 
-import com.shadows.hkprogrammer.windows.SelectProviderController;
+import com.shadows.hkprogrammer.windows.controllers.SelectProviderController;
 import java.util.Objects;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

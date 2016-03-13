@@ -113,12 +113,59 @@ public class MessageHandler {
             throw new IllegalArgumentException("Message length is more then allowed for this type of message!");
         ByteArray MessageHeader = messageBytes.Read(0, 2);
         if (!Objects.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderPosition)))
-            throw new IllegalArgumentException("Message header is different from expected!"); 
-        ByteArray Checksum = messageBytes.Read(messageBytes.Length() - 2, 2);
-        ByteArray Payload = messageBytes.Read(2, messageBytes.length - 4);
-        ByteArray payloadChecksum = Payload.ChecksumBySB();
-        if (!Objects.equals(Checksum,payloadChecksum))
-            throw new IllegalArgumentException("Message checksum does not match payload!"); 
+            throw new IllegalArgumentException("Message header is different from expected!");         
+    }
+    
+    private int CreatePositionValuesMessageChecksum(PositionValuesMessage message){
+        int Checksum = 0;
+        for (int i = 0; i < 6; i++) {
+            Checksum+=
+                message.getChannelPositionInfo(i+1);
+        }   
+        Checksum += message.getFourthPseudo();
+        return Checksum;
+    }
+    
+    private int CreateParameterValuesMessageChecksum(ParameterMessage message)
+    {
+        int Checksum = 0;
+        String Model = Integer.toBinaryString(message.getTXModelType().getValue()),
+                Craft = Integer.toBinaryString(message.getCraftTypeNum().getValue());
+        Checksum+=(Integer.parseInt(Model+Craft, 2));
+        Checksum+=(message.isReverseBitmask() ? 1 : 0);
+        for (ParameterDRValue DRValue : message.getDRValues()) {
+            Checksum+=(DRValue.getOnValue());
+            Checksum+=(DRValue.getOffValue());
+        }        
+        for (int Swash : message.getSwash())
+            Checksum+=(Swash);        
+        for (PotmeterEndPoint Endpoint : message.getEndPoints()){
+            Checksum+=(Endpoint.getLeft());
+            Checksum+=(Endpoint.getRigth());
+        }
+        for (ThrottleCurve Curve : message.getThrottleCurves()){
+            Checksum+=(Curve.getNormal());
+            Checksum+=(Curve.getID());
+        }
+        for (PitchCurve Curve : message.getPitchCurves()){
+            Checksum+=(Curve.getNormal());
+            Checksum+=(Curve.getID());
+        }
+        for (int Subtrim : message.getSubtrim())
+            Checksum+=(Subtrim);
+        for (MixSetting Mix : message.getMixes()){
+            String Source = Integer.toBinaryString(Mix.getSource().getValue()),
+                    Destination = Integer.toBinaryString(Mix.getDestination().getValue());
+            Checksum+=(Integer.parseInt(Source + Destination, 2));           
+            Checksum+=(Mix.getUprate());
+            Checksum+=(Mix.getDownrate());
+            Checksum+=(Mix.getSwitch().getValue());
+        }
+        for (SwitchFunction Switch : message.getSwitchFunction())
+            Checksum+=(Switch.getValue());
+        for (VRFunction VR : message.getVRModes())
+            Checksum+=(VR.getValue());
+        return Checksum;
     }
     
     private void ValidateParameterRequestMessageBytes(ByteArray messageBytes){
@@ -127,10 +174,6 @@ public class MessageHandler {
         ByteArray MessageHeader = messageBytes.Read(0, 2);
         if (!Objects.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderParameterRequest)))
             throw new IllegalArgumentException("Message header is different from expected!"); 
-        ByteArray Payload = messageBytes.Read(2, 1);
-        ByteArray payloadChecksum = ByteArray.FromByteArray(new byte[]{ (byte)0x00 });
-        if (!Objects.equals(Payload,payloadChecksum))
-           throw new IllegalArgumentException("Message flag does not match 0!"); 
     }
     
     private void ValidateParameterDumpMessageBytes(ByteArray messageBytes){
@@ -139,11 +182,6 @@ public class MessageHandler {
         ByteArray MessageHeader = messageBytes.Read(0, 2);
         if (!Objects.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderParameterDump)))
             throw new IllegalArgumentException("Message header is different from expected!"); 
-        ByteArray Checksum = messageBytes.Read(messageBytes.Length() - 2, 2);
-        ByteArray Payload = messageBytes.Read(2, messageBytes.length - 4);
-        ByteArray payloadChecksum = Payload.ChecksumBySB();
-        if (!Objects.equals(Checksum,payloadChecksum))
-            throw new IllegalArgumentException("Message checksum does not match payload!"); 
     }
     
     private void ValidateParameterSetMessageBytes(ByteArray messageBytes){
@@ -152,11 +190,6 @@ public class MessageHandler {
         ByteArray MessageHeader = messageBytes.Read(0, 2);
         if (!Objects.equals(MessageHeader, BuildHeader(MessageHandlerConsts.HeaderParameterSet)))
             throw new IllegalArgumentException("Message header is different from expected!"); 
-        ByteArray Checksum = messageBytes.Read(messageBytes.Length() - 2, 2);
-        ByteArray Payload = messageBytes.Read(2, messageBytes.length - 4);
-        ByteArray payloadChecksum = Payload.ChecksumBySB();
-        if (!Objects.equals(Checksum,payloadChecksum))
-            throw new IllegalArgumentException("Message checksum does not match payload!"); 
     }
     
     
@@ -253,13 +286,19 @@ public class MessageHandler {
                 MessageHandlerConsts.HeaderPosition
         );
         WritePayloadOfPositionMessage(message, returnArray);        
-        CreateCheckSumToByteArray(returnArray);
+        int CheckSum = CreatePositionValuesMessageChecksum(message);
+        returnArray.Write(CheckSum, 16, true);
         return returnArray;
     }        
     
     public PositionValuesMessage GetPositionValuesMessageFromBytes(ByteArray messageBytes){
         ValidatePositionValuesMessageBytes(messageBytes);       
-        return CreatePositionValuesMessageFromBytes(messageBytes);
+        PositionValuesMessage message = CreatePositionValuesMessageFromBytes(messageBytes);
+        ByteArray checkSumFromMessage = messageBytes.Read(16, 2);
+        int CheckSum = CreatePositionValuesMessageChecksum(message);
+        if (checkSumFromMessage.ToInteger()!=CheckSum)
+            throw new IllegalArgumentException("Message checksum does not match payload!"); 
+        return message;
     }
     
     public ByteArray GetBytesForParameterRequestMessage(ParameterRequest message){
@@ -288,7 +327,12 @@ public class MessageHandler {
     
     public ParameterMessage GetParameterDumpMessageFromBytes(ByteArray messageBytes){
         ValidateParameterDumpMessageBytes(messageBytes);
-        return CreateParameterMessageFromBytes(messageBytes);
+        ParameterMessage message = CreateParameterMessageFromBytes(messageBytes);
+        ByteArray checkSumFromMessage = messageBytes.Read(67, 2);
+        int CheckSum = CreateParameterValuesMessageChecksum(message);
+        if (checkSumFromMessage.ToInteger()!=CheckSum)
+            throw new IllegalArgumentException("Message checksum does not match payload!"); 
+        return message;
     }    
     
     public ByteArray GetBytesForParameterSetMessage(ParameterMessage message){
@@ -302,6 +346,11 @@ public class MessageHandler {
     
     public ParameterMessage GetParameterSetMessageFromBytes(ByteArray messageBytes){
         ValidateParameterSetMessageBytes(messageBytes);
-        return CreateParameterMessageFromBytes(messageBytes);
+        ParameterMessage message = CreateParameterMessageFromBytes(messageBytes);
+        ByteArray checkSumFromMessage = messageBytes.Read(67, 2);
+        int CheckSum = CreateParameterValuesMessageChecksum(message);
+        if (checkSumFromMessage.ToInteger()!=CheckSum)
+            throw new IllegalArgumentException("Message checksum does not match payload!"); 
+        return message;
     }    
 }
