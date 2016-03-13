@@ -5,6 +5,8 @@
  */
 package com.shadows.hkprogrammer.core.utils;
 
+import java.util.zip.CRC32;
+
 /**
  *
  * @author John
@@ -28,11 +30,11 @@ class ByteArrayHelper {
     }
      
     public int ByteArrayChecksum(byte[] array){
-        int Sum = 0;
-        for (Byte byteValue : array) {
-            Sum += byteValue;
+        int sum =0;
+        for(int b:array){
+            sum += (b & 0xff);
         }
-        return Sum;
+        return sum;
     }
     
     public byte[] ByteArrayCheckSumBySB(byte[] array){

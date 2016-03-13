@@ -103,7 +103,7 @@ public class MixSetting {
     }
     
     private void ValidateProcents(int Value){
-        if (Value > 127 || Value < 0)
+        if (Value > 127 || Value < -127)
             throw new IllegalArgumentException("Value of mix rates must be between 0 and 127");
     }
 }

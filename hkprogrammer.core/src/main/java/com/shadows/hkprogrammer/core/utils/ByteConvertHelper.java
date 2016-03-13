@@ -40,11 +40,11 @@ public class ByteConvertHelper {
         return value[index];
     }        
     
-    public String ByteToString(byte[] value){
+    public String ByteArrayToString(byte[] value){
         return new String(value, StandardCharsets.UTF_8);
     }
     
-    public int ByteToInteger(byte[] value){
+    public int ByteArrayToInteger(byte[] value){
         if (value.length < 4){
             byte[] newValue = new byte[4];
             System.arraycopy(value, 0, newValue, 4 - value.length, value.length);
@@ -57,7 +57,7 @@ public class ByteConvertHelper {
         return value.getBytes(StandardCharsets.UTF_8);
     }
     
-    public byte[] IntegerToByte(int value, boolean trim){
+    public byte[] IntegerToByteArray(int value, boolean trim){
         byte[] bytes =  new byte[] {
             (byte)(value >>> 24),
             (byte)(value >>> 16),
@@ -69,23 +69,48 @@ public class ByteConvertHelper {
             return bytes;
     }   
     
-    public byte[] IntegerToByte(int value){
-        return IntegerToByte(value,false);
+    public byte[] IntegerToByteArray(int value){
+        return IntegerToByteArray(value,false);
     }         
     
+    public byte[] ShortToByte(short value){
+        ByteBuffer buffer = ByteBuffer.allocate(2);
+        buffer.putShort(value);
+        return buffer.array();
+    }
+    
+    public short ByteArrayToShort(byte[] value){
+         if (value.length < 2){
+            byte[] newValue = new byte[2];
+            System.arraycopy(value, 0, newValue, 2 - value.length, value.length);
+            value = newValue;
+        }
+        return ByteBuffer.wrap(value).getShort();
+    }
+    
     public byte[] IntegerToByteBySB(int value){
-        byte[] intBytes = IntegerToByte(value);
+        byte[] intBytes = ByteConvertHelper.this.IntegerToByteArray(value);
         return new byte[] { MSB(intBytes), LSB(intBytes) };
     }
     
     public byte[] BooleanToByte(boolean value){
         int intValue = value ? 1 : 0;
-        byte[] values = IntegerToByte(intValue,true);
+        byte[] values = IntegerToByteArray(intValue,true);
         return values;
     }
 
     public boolean ByteToBoolean(byte[] Value) {
-        int intValue = ByteToInteger(Value);
+        int intValue = ByteArrayToInteger(Value);
         return intValue == 1;
+    }
+    
+    public int ByteToInt(byte byteValue){
+        return (int) byteValue;
+    }
+    
+    public int IntToByte(int byteValue){
+        if (byteValue< -128||byteValue>127)
+            throw new IllegalArgumentException("byte can only be between -128 and 127!");
+        return (int) byteValue;
     }
 }

@@ -58,7 +58,7 @@ public class ThrottleCurve {
     }
     
     private void ValidateValue(int Value){
-        if (Value > 127 || Value < 0)
+        if (Value > 127 || Value < -128)
             throw new IllegalArgumentException("Value of Throttle Curve must be between 0 and 127");
     } 
     

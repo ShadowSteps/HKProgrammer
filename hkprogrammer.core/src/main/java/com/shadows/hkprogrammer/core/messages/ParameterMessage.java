@@ -257,7 +257,7 @@ public class ParameterMessage {
     }
     
     public void setSubtrimValueForChannel(ControlChannel channel,int value){
-        ValidateSwashValue(value);
+        ValidateSubtrimValue(value);
         int channelNum = channel.getValue();
         this.Subtrim[channelNum] = value;
     }

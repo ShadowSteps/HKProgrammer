@@ -40,7 +40,7 @@ public class IntToByteSceneController implements Initializable {
     private void handleIntToByteArray(Event event){
         String Int = intToByteInput.getText();
         int value = Integer.parseInt(Int);
-        byte[] byteValue = convert.IntegerToByte(value);
+        byte[] byteValue = convert.IntegerToByteArray(value);
         valuesHelper.WriteByteArrayToTextArea(byteToIntInput, byteValue);
     }
      @FXML

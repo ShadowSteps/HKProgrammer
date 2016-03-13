@@ -62,6 +62,10 @@ public class ByteArray {
         return newArray;
     }
     
+    public void Write(byte chunk,int offset){
+        this.Write(new byte[]{chunk}, offset);        
+    }
+    
     public void Write(ByteArray chunk,int offset){
         this.Write(chunk.ToPrimitive(), offset);
         
@@ -85,7 +89,7 @@ public class ByteArray {
         if (convertInt)
             Integer = Convert.IntegerToByteBySB(chunk);
         else
-            Integer = Convert.IntegerToByte(chunk, trimInteger);
+            Integer = Convert.IntegerToByteArray(chunk, trimInteger);
         this.Write(Integer, offset);
     }
     
@@ -148,11 +152,19 @@ public class ByteArray {
     }
     
     public int ToInteger(){
-        return Convert.ByteToInteger(Value);
+        if (Value.length != 4)
+            throw new IllegalStateException("Byte can only be read from 4 element byte array!");
+        return Convert.ByteArrayToInteger(Value);
+    }
+    
+    public int ToByteAsInteger(){
+        if (Value.length != 1)
+            throw new IllegalStateException("Byte can only be read from 1 element byte array!");
+        return Convert.ByteToInt(Value[0]);
     }
     
     public String ToString(){
-        return Convert.ByteToString(Value);
+        return Convert.ByteArrayToString(Value);
     }
     
     public boolean ToBoolean(){

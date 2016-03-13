@@ -60,7 +60,7 @@ public class ByteConvertHelperTest {
         System.out.println("ByteToString");
         byte[] value = { 97, 98, 99 };
         String expResult = "abc";
-        String result = Converter.ByteToString(value);
+        String result = Converter.ByteArrayToString(value);
         assertEquals(expResult, result);        
     }
 
@@ -72,7 +72,7 @@ public class ByteConvertHelperTest {
         System.out.println("ByteToInteger");
         byte[] value = new byte[]{-2, -4, -8, -16};
         Integer expResult = -16975632;
-        Integer result = Converter.ByteToInteger(value);
+        Integer result = Converter.ByteArrayToInteger(value);
         assertEquals(expResult, result);
     }
 
@@ -96,7 +96,7 @@ public class ByteConvertHelperTest {
         System.out.println("IntegerToByte");
         int value = -16975632;
         byte[] expResult = new byte[]{ -2, -4, -8, -16 };
-        byte[] result = Converter.IntegerToByte(value);
+        byte[] result = Converter.IntegerToByteArray(value);
         assertArrayEquals(expResult, result);
     }
     
@@ -144,5 +144,31 @@ public class ByteConvertHelperTest {
         assertTrue(result);
         assertFalse(falseResult);
         
+    }
+   
+    /**
+     * Test of ShortToByte method, of class ByteConvertHelper.
+     */
+    @Test
+    public void testShortToByte() {
+        System.out.println("ShortToByte");
+        short value = -100;
+        ByteConvertHelper instance = new ByteConvertHelper();
+        byte[] expResult = new byte[] { -1, -100};
+        byte[] result = instance.ShortToByte(value);
+        assertArrayEquals(expResult, result);
+    }
+
+    /**
+     * Test of ByteArrayToShort method, of class ByteConvertHelper.
+     */
+    @Test
+    public void testByteArrayToShort() {
+        System.out.println("ByteArrayToShort");
+        byte[] value = new byte[] { 0, -100};
+        ByteConvertHelper instance = new ByteConvertHelper();
+        short expResult = -100;
+        short result = instance.ByteArrayToShort(value);
+        assertEquals(expResult, result);
     }
 }

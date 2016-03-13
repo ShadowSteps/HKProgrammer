@@ -152,7 +152,7 @@ public class MessageHandlerTest {
             0, 0, 0, 3, // Mix 3
             0, 0, //Switch function
             0, 0, //VR functions
-            0, 9 //Checksum
+            -34, -84 //Checksum
         });
         ByteArray result = instance.GetBytesForParameterDumpMessage(message);
         assertEquals(expResult, result);
@@ -167,35 +167,35 @@ public class MessageHandlerTest {
         ByteArray messageBytes = ByteArray.FromByteArray(new byte[]{
             MessageHandlerConsts.HeaderBeggining,
             MessageHandlerConsts.HeaderParameterDump,
-            0, //TXModel/CraftType
-            0, //Reverse bitmark
+            18, //TXModel/CraftType
+            5, //Reverse bitmark
             0, 0, //DR CH1
             0, 0, //DR CH2
             0, 0, //DR CH4
-            0, 0, 0, //Swash
-            0, 0, //Endpoint CH1
-            0, 0, //Endpoint CH2
-            0, 0, //Endpoint CH3
-            0, 0, //Endpoint CH4
-            0, 0, //Endpoint CH5
-            0, 0, //Endpoint CH6
-            0, 0, //Throttle EP0
-            0, 0, //Throttle EP1
-            0, 0, //Throttle EP2
-            0, 0, //Throttle EP3
-            0, 0, //Throttle EP4
-            0, 0, //Pitch EP0
-            0, 0, //Pitch EP1
-            0, 0, //Pitch EP2
-            0, 0, //Pitch EP3
-            0, 0, //Pitch EP4
-            0, 0, 0, 0, 0, 0, // Subtrim
-            0, 0, 0, 3, // Mix 1
-            0, 0, 0, 3, // Mix 2
-            0, 0, 0, 3, // Mix 3
-            0, 0, //Switch function
-            0, 0, //VR functions
-            0, 9 //Checksum
+            100, 100, 100, //Swash
+            120, 120, //Endpoint CH1
+            95, 120, //Endpoint CH2
+            120, 120, //Endpoint CH3
+            120, 120, //Endpoint CH4
+            95, 120, //Endpoint CH5
+            120, 120, //Endpoint CH6
+            120, -18, //Throttle EP0
+            120, 14, //Throttle EP1
+            120, -45, //Throttle EP2
+            120, -24, //Throttle EP3
+            120, -24, //Throttle EP4
+            2, 0, //Pitch EP0
+            4, -89, //Pitch EP1
+            85, -4, //Pitch EP2
+            5, -21, //Pitch EP3
+            5, -18, //Pitch EP4
+            23, 0, 20, 10, -18, -100, // Subtrim
+            4, -100, 0, 2, // Mix 1
+            1, -5, 85, 2, // Mix 2
+            20, 100, 100, 0, // Mix 3
+            0, 2, //Switch function
+            0, 1, //VR functions
+            21, 28//Checksum
         });
         MessageHandler instance = new MessageHandler();
         ParameterMessage expResult = new ParameterMessage();
@@ -242,7 +242,7 @@ public class MessageHandlerTest {
             0, 0, 0, 3, // Mix 3
             0, 0, //Switch function
             0, 0, //VR functions
-            0, 9 //Checksum
+            -34, -84 //Checksum
         });
         ByteArray result = instance.GetBytesForParameterSetMessage(message);
         assertEquals(expResult, result);
@@ -285,7 +285,7 @@ public class MessageHandlerTest {
             0, 0, 0, 3, // Mix 3
             0, 0, //Switch function
             0, 0, //VR functions
-            0, 9 //Checksum
+            -34, -84 //Checksum
         });
         MessageHandler instance = new MessageHandler();
         ParameterMessage expResult = new ParameterMessage();
