@@ -6,13 +6,12 @@
 package com.shadows.hkprogrammer.windows.controls.managers;
 
 import com.shadows.hkprogrammer.core.communication.Communicator;
+import com.shadows.hkprogrammer.windows.controls.events.ParametersLoadedEvent;
 import com.shadows.hkprogrammer.windows.core.tasks.ParameterSyncTask;
 import com.shadows.hkprogrammer.windows.core.tasks.SyncTask;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -65,7 +64,7 @@ public class CommunicatorWorkerManager {
             if (!result&&onParameterSyncFailed != null)
                 onParameterSyncFailed.actionPerformed(null);
             else if (result&&onParameterSyncSuccess != null)
-                onParameterSyncSuccess.actionPerformed(null);
+                onParameterSyncSuccess.actionPerformed(new ParametersLoadedEvent(communicator,parameterSyncWorker.getParameters()));
         });
         parameterSyncWorker.setOnFailed((e) -> {
             DialogManager.CloseLoadingDialog();

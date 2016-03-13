@@ -6,6 +6,7 @@
 package com.shadows.hkprogrammer.windows.core.tasks;
 
 import com.shadows.hkprogrammer.core.communication.Communicator;
+import com.shadows.hkprogrammer.core.messages.ParameterMessage;
 import javafx.concurrent.Task;
 
 /**
@@ -13,12 +14,15 @@ import javafx.concurrent.Task;
  * @author John
  */
 public class ParameterSyncTask extends Task<Boolean>{
-    public int SyncInterval = 100;
     public boolean isSynced = false;
     private final Communicator communicator;
-
+    private ParameterMessage message;
     public ParameterSyncTask(Communicator communicator) {
         this.communicator = communicator;
+    }
+    
+    public ParameterMessage getParameters(){
+        return this.message;
     }
     
     @Override
@@ -27,6 +31,7 @@ public class ParameterSyncTask extends Task<Boolean>{
         synchronized(communicator){            
             communicator.ParametersSync();
         } 
+        this.message = communicator.getStatus().Parameters;
         return isSynced = true;
     }    
 }

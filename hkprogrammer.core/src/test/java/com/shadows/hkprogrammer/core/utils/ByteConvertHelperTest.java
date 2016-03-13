@@ -165,7 +165,7 @@ public class ByteConvertHelperTest {
     @Test
     public void testByteArrayToShort() {
         System.out.println("ByteArrayToShort");
-        byte[] value = new byte[] { 0, -100};
+        byte[] value = new byte[] { -1, -100};
         ByteConvertHelper instance = new ByteConvertHelper();
         short expResult = -100;
         short result = instance.ByteArrayToShort(value);

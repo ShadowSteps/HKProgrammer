@@ -33,7 +33,7 @@ import java.util.Objects;
 public class ParameterMessage {
     private TXModel TXModelType = TXModel.Model1;
     private CraftType CraftTypeNum = CraftType.Acro;
-    private boolean ReverseBitmask = false;
+    private Boolean[] ReverseBitmask = new Boolean[6];
     private final ParameterDRValue[] DRValues = new ParameterDRValue[3];
     private final int[] Swash = new int[3];
     private final PotmeterEndPoint[] EndPoints = new PotmeterEndPoint[6];
@@ -61,7 +61,7 @@ public class ParameterMessage {
         int hash = 7;
         hash = 47 * hash + Objects.hashCode(this.TXModelType);
         hash = 47 * hash + Objects.hashCode(this.CraftTypeNum);
-        hash = 47 * hash + (this.ReverseBitmask ? 1 : 0);
+        hash = 47 * hash + Arrays.deepHashCode(ReverseBitmask);
         hash = 47 * hash + Arrays.deepHashCode(this.DRValues);
         hash = 47 * hash + Arrays.hashCode(this.Swash);
         hash = 47 * hash + Arrays.deepHashCode(this.EndPoints);
@@ -89,7 +89,7 @@ public class ParameterMessage {
         if (this.CraftTypeNum != other.CraftTypeNum) {
             return false;
         }
-        if (this.ReverseBitmask != other.ReverseBitmask) {
+        if (!Arrays.deepEquals(this.ReverseBitmask,other.ReverseBitmask)) {
             return false;
         }
         if (!Arrays.deepEquals(this.DRValues, other.DRValues)) {
@@ -138,14 +138,10 @@ public class ParameterMessage {
 
     public void setCraftTypeNum(CraftType CraftTypeNum) {
         this.CraftTypeNum = CraftTypeNum;
-    }
+    }   
 
-    public boolean isReverseBitmask() {
+    public Boolean[] getReverseBitmask() {
         return ReverseBitmask;
-    }
-
-    public void setReverseBitmask(boolean ReverseBitmask) {
-        this.ReverseBitmask = ReverseBitmask;
     }
 
     public ParameterDRValue[] getDRValues() {
@@ -202,6 +198,11 @@ public class ParameterMessage {
         }
     }
     
+    public void setReverseBitmaskForChannel(ControlChannel channel,boolean Enabled) {
+        int channelNum = (channel.getValue());    
+        this.ReverseBitmask[channelNum] = Enabled;
+    }
+    
     public void setDRValueForChannel(DRChannel channel,ParameterDRValue value){
         int channelNum = (channel.getValue());
         this.DRValues[channelNum] = value;
@@ -237,7 +238,7 @@ public class ParameterMessage {
         this.ThrottleCurves[pointNum] = value;
     }
     
-    public void setThrottleCurveValueForChannel(HeliEndPoint point,int normal,int ID){
+    public void setThrottleCurveValueForChannel(HeliEndPoint point,byte normal,byte ID){
         ThrottleCurve Point = new ThrottleCurve();
         Point.setID(ID);
         Point.setNormal(normal);
@@ -249,7 +250,7 @@ public class ParameterMessage {
         this.PitchCurves[pointNum] = value;
     }
     
-    public void setPitchCurveValueForChannel(HeliEndPoint point,int normal,int ID){
+    public void setPitchCurveValueForChannel(HeliEndPoint point,byte normal,byte ID){
         PitchCurve Point = new PitchCurve();
         Point.setID(ID);
         Point.setNormal(normal);

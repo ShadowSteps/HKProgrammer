@@ -6,8 +6,10 @@
 package com.shadows.hkprogrammer.windows.controls.eventlistners;
 
 import com.shadows.hkprogrammer.windows.controllers.FXMLController;
+import com.shadows.hkprogrammer.windows.controls.managers.AlertManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javafx.application.Platform;
 
 /**
  *
@@ -22,6 +24,7 @@ public class ParamaterSyncFailListener implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO
+        AlertManager.AlertError("Failed to sync parameters!");
+        Platform.exit();
     }    
 }

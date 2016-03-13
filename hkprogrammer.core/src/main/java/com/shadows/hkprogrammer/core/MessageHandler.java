@@ -70,43 +70,50 @@ public class MessageHandler {
         ByteArray payload = new ByteArray(65);
         String Model = Integer.toBinaryString(message.getTXModelType().getValue()),
                 Craft = Integer.toBinaryString(message.getCraftTypeNum().getValue());
-        payload.Write(Integer.parseInt(Model+Craft, 2));
-        payload.Write(message.isReverseBitmask());
+        payload.Write(Integer.parseInt(StringUtils.leftPad(Model,4,"0")+StringUtils.leftPad(Craft,4,"0"), 2));
+        String Bitmask = "";
+        for (Boolean reverse:message.getReverseBitmask())
+            Bitmask = (reverse ? 1 : 0) + Bitmask;
+        Bitmask = "00"+Bitmask;
+        payload.Write((byte)Integer.parseInt(Bitmask,2));
         for (ParameterDRValue DRValue : message.getDRValues()) {
-            payload.Write(DRValue.getOnValue());
-            payload.Write(DRValue.getOffValue());
+            payload.Write((byte)DRValue.getOnValue());
+            payload.Write((byte)DRValue.getOffValue());
         }        
         for (int Swash : message.getSwash())
-            payload.Write(Swash);        
+            payload.Write((byte)Swash);        
         for (PotmeterEndPoint Endpoint : message.getEndPoints()){
-            payload.Write(Endpoint.getLeft());
-            payload.Write(Endpoint.getRigth());
+            payload.Write((byte)Endpoint.getLeft());
+            payload.Write((byte)Endpoint.getRigth());
         }
         for (ThrottleCurve Curve : message.getThrottleCurves()){
-            payload.Write(Curve.getNormal());
-            payload.Write(Curve.getID());
+            payload.Write((byte)Curve.getNormal());
+            payload.Write((byte)Curve.getID());
         }
         for (PitchCurve Curve : message.getPitchCurves()){
-            payload.Write(Curve.getNormal());
-            payload.Write(Curve.getID());
+            payload.Write((byte)Curve.getNormal());
+            payload.Write((byte)Curve.getID());
         }
         for (int Subtrim : message.getSubtrim())
-            payload.Write(Subtrim);
+            payload.Write((byte)Subtrim);
         for (MixSetting Mix : message.getMixes()){
             String Source = Integer.toBinaryString(Mix.getSource().getValue()),
                     Destination = Integer.toBinaryString(Mix.getDestination().getValue());
-            payload.Write(Integer.parseInt(Source + Destination, 2));           
-            payload.Write(Mix.getUprate());
-            payload.Write(Mix.getDownrate());
-            payload.Write(Mix.getSwitch().getValue());
+            payload.Write((byte)Integer.parseInt(
+                    StringUtils.leftPad(Source,4,"0") + 
+                        StringUtils.leftPad(Destination,4,"0"),
+                    2)
+            );           
+            payload.Write((byte)Mix.getUprate());
+            payload.Write((byte)Mix.getDownrate());
+            payload.Write((byte)Mix.getSwitch().getValue());
         }
         for (SwitchFunction Switch : message.getSwitchFunction())
-            payload.Write(Switch.getValue());
+            payload.Write((byte)Switch.getValue());
         for (VRFunction VR : message.getVRModes())
-            payload.Write(VR.getValue());
-        ByteArray Checksum = payload.ChecksumBySB();
+            payload.Write((byte)VR.getValue());
         messageBytes.Write(payload);
-        messageBytes.Write(Checksum);
+        messageBytes.Write(payload.ChecksumBySB());
     }
     
     private void ValidatePositionValuesMessageBytes(ByteArray messageBytes){
@@ -157,22 +164,22 @@ public class MessageHandler {
     }
     
     
-    private PositionValuesMessage CreatePositionValuesMessageFromBytes(ByteArray msgBytes){
+     private PositionValuesMessage CreatePositionValuesMessageFromBytes(ByteArray msgBytes){
         ByteArray Payload = msgBytes.Read(2, msgBytes.length - 4);
         ByteArray fourthPseudoBytes = Payload.Read(12, 2);
         PositionValuesMessage message = new PositionValuesMessage();
         for (int i = 0; i < 6; i++) {
             ByteArray get = Payload.Read(i*2, 2);
-            message.setChannelPositionInfo(i+1, get.ToByteAsInteger());
+            message.setChannelPositionInfo(i+1, get.ToShort());
         }
-        message.setFourthChannelPositionPseudo(fourthPseudoBytes.ToByteAsInteger());
+        message.setFourthChannelPositionPseudo(fourthPseudoBytes.ToShort());
         return message;
     }
     
     private ParameterMessage CreateParameterMessageFromBytes(ByteArray msgBytes){
         ByteArray Payload = msgBytes.Read(2, msgBytes.length - 4);
         ParameterMessage message = new ParameterMessage();
-        String BaseTypesValue = Integer.toBinaryString(Payload.Read(0, 1).ToByteAsInteger());
+        String BaseTypesValue = Integer.toBinaryString(Payload.Read(0, 1).ToByte());
         String BaseTypes = StringUtils.leftPad(BaseTypesValue, 8, '0');
         message.setTXModelType(
                 TXModel.fromInteger(Integer.parseInt(BaseTypes.substring(0, 4),2))
@@ -180,20 +187,19 @@ public class MessageHandler {
         String CraftTypeString = BaseTypes.substring(4, 8);
         message.setCraftTypeNum(
                 CraftType.fromInteger(Integer.parseInt(CraftTypeString,2))
-        );
-        message.setReverseBitmask(Payload.Read(1, 1).ToBoolean());        
+        );        
         for (int i = 0; i < 3; i++) {
-            int onValue = Payload.Read(2+(i)*2, 1).ToByteAsInteger(),
-                    offValue = Payload.Read(3+(i)*2, 1).ToByteAsInteger();
+            int onValue = Payload.Read(2+(i)*2, 1).ToByte(),
+                    offValue = Payload.Read(3+(i)*2, 1).ToByte();
             message.setDRValueForChannel(DRChannel.fromInteger(i), onValue, offValue);
-            int swash = Payload.Read(8 + i, 1).ToByteAsInteger();
+            int swash = Payload.Read(8 + i, 1).ToByte();
             message.setSwashValueForChannel(SwashChannel.fromInteger(i), swash);
-            String mixCommunicationValue = Integer.toBinaryString(Payload.Read(49 + i*4, 1).ToByteAsInteger());
+            String mixCommunicationValue = Integer.toBinaryString(Payload.Read(49 + i*4, 1).ToByte());
             String mixCommunication = StringUtils.leftPad(mixCommunicationValue, 8, '0');
                     
-            int mixUprate = Payload.Read(50 + i*4, 1).ToByteAsInteger(),
-                    mixDownrate = Payload.Read(51 + i*4, 1).ToByteAsInteger(),
-                    mixSwitch = Payload.Read(52 + i*4, 1).ToByteAsInteger();
+            int mixUprate = Payload.Read(50 + i*4, 1).ToByte(),
+                    mixDownrate = Payload.Read(51 + i*4, 1).ToByte(),
+                    mixSwitch = Payload.Read(52 + i*4, 1).ToByte();
             message.setMixSettingsValue(
                     i+1, 
                     MixDestination.fromInteger(Integer.parseInt(mixCommunication.substring(4, 8), 2)), 
@@ -203,22 +209,28 @@ public class MessageHandler {
                     mixUprate
             );            
         }
+        String ReverseBytes = Integer.toBinaryString(Payload.Read(1, 1).ToByte());       
+        ReverseBytes = StringUtils.leftPad(ReverseBytes, 8, '0');
         for (int i = 0; i < 6; i++) {
-            int endPointLeft = Payload.Read(11+(i)*2, 1).ToByteAsInteger(),
-                   endPointRight = Payload.Read(12+(i)*2, 1).ToByteAsInteger();
+            int endPointLeft = Payload.Read(11+(i)*2, 1).ToByte(),
+                   endPointRight = Payload.Read(12+(i)*2, 1).ToByte();
             message.setEndPointValueForChannel(
                     ControlChannel.fromInteger(i), 
                     endPointLeft, 
                     endPointRight
             );
-            int subtrim = Payload.Read(43+i, 1).ToByteAsInteger();
+            message.setReverseBitmaskForChannel(
+                    ControlChannel.fromInteger(i),
+                    Integer.parseInt(ReverseBytes.substring(7-i, 8-i),2) == 1
+                );
+            int subtrim = Payload.Read(43+i, 1).ToByte();
             message.setSubtrimValueForChannel(ControlChannel.fromInteger(i), subtrim);
         }
         for (int i = 0; i < 5; i++) {
-            int throttleNormal = Payload.Read(23+(i)*2, 1).ToByteAsInteger(),
-                    throttleId = Payload.Read(24+(i)*2, 1).ToByteAsInteger(),
-                    pitchNormal = Payload.Read(33+(i)*2, 1).ToByteAsInteger(),
-                    pitchId = Payload.Read(34+(i)*2, 1).ToByteAsInteger();
+            byte throttleNormal = Payload.Read(23+(i)*2, 1).ToByte(),
+                    throttleId = Payload.Read(24+(i)*2, 1).ToByte(),
+                    pitchNormal = Payload.Read(33+(i)*2, 1).ToByte(),
+                    pitchId = Payload.Read(34+(i)*2, 1).ToByte();
             message.setThrottleCurveValueForChannel(
                     HeliEndPoint.fromInteger(i), 
                     throttleNormal, 
@@ -231,8 +243,8 @@ public class MessageHandler {
             );
         }
         for (int i = 0; i < 2; i++){
-            int SwitchFunctionVal = Payload.Read(61 + i, 1).ToByteAsInteger(),
-                    VRFunctionVal = Payload.Read(63 + i, 1).ToByteAsInteger();
+            int SwitchFunctionVal = Payload.Read(61 + i, 1).ToByte(),
+                    VRFunctionVal = Payload.Read(63 + i, 1).ToByte();
             message.setSwitchFunction(
                     SwitchType.fromInteger(i), 
                     SwitchFunction.fromInteger(SwitchFunctionVal)

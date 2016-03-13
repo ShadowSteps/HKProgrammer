@@ -10,8 +10,8 @@ package com.shadows.hkprogrammer.core.messages.values;
  * @author John
  */
 public class PitchCurve {
-    public int Normal = 0;
-    public int ID = 0;
+    public byte Normal = 0;
+    public byte ID = 0;
 
     @Override
     public int hashCode() {
@@ -39,25 +39,25 @@ public class PitchCurve {
         return true;
     }   
     
-    public int getNormal() {
+    public byte getNormal() {
         return Normal;
     }
 
-    public void setNormal(int Normal) {
+    public void setNormal(byte Normal) {
         ValidateValue(Normal);
         this.Normal = Normal;
     }
 
-    public int getID() {
+    public byte getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(byte ID) {
         ValidateValue(ID);
         this.ID = ID;
     }
     
-    private void ValidateValue(int Value){
+    private void ValidateValue(byte Value){
         if (Value > 127 || Value < -128)
             throw new IllegalArgumentException("Value of Pitch Curve must be between 0 and 127");
     } 

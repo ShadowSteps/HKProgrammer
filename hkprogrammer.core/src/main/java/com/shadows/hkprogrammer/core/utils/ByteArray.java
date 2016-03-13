@@ -6,7 +6,6 @@
 package com.shadows.hkprogrammer.core.utils;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  *
@@ -60,6 +59,10 @@ public class ByteArray {
         ByteArray newArray = new ByteArray(Array.length);
         newArray.Write(Array, 0);
         return newArray;
+    }
+    
+    public void Write(byte chunk){
+        this.Write(new byte[]{chunk}, currentOffset);        
     }
     
     public void Write(byte chunk,int offset){
@@ -157,10 +160,16 @@ public class ByteArray {
         return Convert.ByteArrayToInteger(Value);
     }
     
-    public int ToByteAsInteger(){
+    public short ToShort(){
+        if (Value.length != 2)
+            throw new IllegalStateException("Byte can only be read from 2 element byte array!");
+        return Convert.ByteArrayToShort(Value);
+    }
+    
+    public byte ToByte(){
         if (Value.length != 1)
             throw new IllegalStateException("Byte can only be read from 1 element byte array!");
-        return Convert.ByteToInt(Value[0]);
+        return Value[0];
     }
     
     public String ToString(){

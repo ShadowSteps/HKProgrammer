@@ -44,7 +44,6 @@ public final class Communicator {
         if (!provider.isConnectionOpened())
             throw new IOException("Cannot craete Communicator while connection with provider is not established!");
         this.Provider = provider;   
-        ParametersSync();
     }
     
     public CommunicationStatus getStatus() {

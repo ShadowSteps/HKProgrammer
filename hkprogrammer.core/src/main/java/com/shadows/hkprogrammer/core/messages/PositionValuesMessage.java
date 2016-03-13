@@ -12,14 +12,14 @@ import java.util.Arrays;
  * @author John
  */
 public class PositionValuesMessage{    
-    private final int[] ChannelPositionInfo = { 1500, 1500, 1500, 1500, 1500, 1500 };
-    private int fourthPseudo = 500;   
+    private final short[] ChannelPositionInfo = { 1500, 1500, 1500, 1500, 1500, 1500 };
+    private short fourthPseudo = 500;   
 
     public int getFourthPseudo() {
         return fourthPseudo;
     }
     
-    public void setChannelPositionInfo(int Channel,int Value) {
+    public void setChannelPositionInfo(int Channel,short Value) {
         CheckChannelValueRange(Value);
         this.ChannelPositionInfo[Channel - 1] = Value;
     }
@@ -28,11 +28,11 @@ public class PositionValuesMessage{
         return this.ChannelPositionInfo[Channel - 1];
     }
 
-    public void setFourthChannelPositionPseudo(int FourthChannelPositionPseudo) {
+    public void setFourthChannelPositionPseudo(short FourthChannelPositionPseudo) {
         this.fourthPseudo = FourthChannelPositionPseudo;
     }    
     
-    private void CheckChannelValueRange(int Value){
+    private void CheckChannelValueRange(short Value){
         if (Value < 1000||Value > 2000)
             throw new IllegalArgumentException("Value must be between 1000 and 2000 for Pot-position!");        
     }
