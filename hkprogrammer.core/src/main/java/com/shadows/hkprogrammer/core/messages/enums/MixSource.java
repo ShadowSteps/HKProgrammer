@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum MixSource {
+public enum MixSource implements Serializable  {
     CH1(0),
     CH2(1),
     CH3(2),

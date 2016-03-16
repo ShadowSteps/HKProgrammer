@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.values;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public class ParameterDRValue {
+public class ParameterDRValue implements Serializable {
     private int OnValue = 0;
     private int OffValue = 0;
 

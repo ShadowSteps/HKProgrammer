@@ -8,13 +8,14 @@ package com.shadows.hkprogrammer.core.messages.values;
 import com.shadows.hkprogrammer.core.messages.enums.MixDestination;
 import com.shadows.hkprogrammer.core.messages.enums.MixSource;
 import com.shadows.hkprogrammer.core.messages.enums.MixSwitch;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author John
  */
-public class MixSetting {
+public class MixSetting implements Serializable  {
     private MixSource Source = MixSource.CH1;
     private MixDestination Destination = MixDestination.CH1;
     private int Uprate = 0;

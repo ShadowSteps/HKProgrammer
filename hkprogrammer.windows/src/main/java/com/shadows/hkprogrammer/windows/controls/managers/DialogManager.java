@@ -8,6 +8,7 @@ package com.shadows.hkprogrammer.windows.controls.managers;
 import com.shadows.hkprogrammer.windows.MainApp;
 import com.shadows.hkprogrammer.windows.controllers.FXMLController;
 import com.shadows.hkprogrammer.windows.controllers.SelectProviderController;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -87,5 +89,17 @@ public class DialogManager {
         LoadingDialog.initModality(Modality.WINDOW_MODAL);
         LoadingDialog.initOwner(MainForm.getWindow());      
         ShowDialog(LoadingDialog, "/fxml/LoadingDialog.fxml", "Loading....");                
+    }
+    public static File ShowSaveFileDialog(){
+        FileChooser fileSelect = new FileChooser();
+        fileSelect.setTitle("Save parameters config");
+        File file = fileSelect.showSaveDialog((Stage)MainForm.getWindow());
+        return file;
+    }
+    public static File ShowOpenFileDialog(){
+        FileChooser fileSelect = new FileChooser();
+        fileSelect.setTitle("Load parameters config");
+        File file = fileSelect.showOpenDialog((Stage)MainForm.getWindow());
+        return file;
     }
 }

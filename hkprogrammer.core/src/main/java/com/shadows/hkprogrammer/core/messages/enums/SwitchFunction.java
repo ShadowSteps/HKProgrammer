@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum SwitchFunction {
+public enum SwitchFunction implements Serializable  {
     Unassigned(0),
     DualRate(1),
     ThrottleCut(2),

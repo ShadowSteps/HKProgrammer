@@ -26,5 +26,6 @@ public class ParamaterSyncFailListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         AlertManager.AlertError("Failed to sync parameters!");
         Platform.exit();
+        System.exit(0);
     }    
 }

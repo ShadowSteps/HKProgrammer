@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.values;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public class PotmeterEndPoint {
+public class PotmeterEndPoint implements Serializable  {
     private int Left = 0;
     private int Right = 0;        
 

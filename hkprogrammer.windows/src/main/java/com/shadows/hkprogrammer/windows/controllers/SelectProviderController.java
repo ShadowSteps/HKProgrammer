@@ -64,6 +64,7 @@ public class SelectProviderController implements Initializable {
     @FXML
     private void cancelButtonClick(Event e){
         Platform.exit();
+        System.exit(0);
     }
     @FXML
     private void submitButtonClick(Event e) throws IOException{

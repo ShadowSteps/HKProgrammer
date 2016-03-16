@@ -64,6 +64,7 @@ public final class Communicator {
     }
     
     public void ParametersSync() throws IOException, InterruptedException {
+        parametersSync = false;
         RequestParametersDump();        
         for (int i = 0; i < 5; i++) {
             Thread.sleep(i*1000);

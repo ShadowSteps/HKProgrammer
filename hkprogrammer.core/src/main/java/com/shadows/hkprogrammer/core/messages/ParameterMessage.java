@@ -23,6 +23,7 @@ import com.shadows.hkprogrammer.core.messages.values.ParameterDRValue;
 import com.shadows.hkprogrammer.core.messages.values.PitchCurve;
 import com.shadows.hkprogrammer.core.messages.values.PotmeterEndPoint;
 import com.shadows.hkprogrammer.core.messages.values.ThrottleCurve;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -30,7 +31,7 @@ import java.util.Objects;
  *
  * @author John
  */
-public class ParameterMessage {
+public class ParameterMessage implements Serializable {
     private TXModel TXModelType = TXModel.Model1;
     private CraftType CraftTypeNum = CraftType.Acro;
     private Boolean[] ReverseBitmask = new Boolean[6];

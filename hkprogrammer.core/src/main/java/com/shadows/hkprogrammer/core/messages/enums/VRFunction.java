@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum VRFunction {
+public enum VRFunction implements Serializable  {
     Unassigned(0),
     PitchAdjust(1);
     

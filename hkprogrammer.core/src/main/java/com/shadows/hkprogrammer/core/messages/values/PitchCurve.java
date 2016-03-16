@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.values;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public class PitchCurve {
+public class PitchCurve implements Serializable  {
     public byte Normal = 0;
     public byte ID = 0;
 

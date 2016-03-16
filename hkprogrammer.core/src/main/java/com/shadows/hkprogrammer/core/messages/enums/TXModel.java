@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum TXModel {
+public enum TXModel implements Serializable {
     Model1(0),
     Model2(1),
     Model3(2),

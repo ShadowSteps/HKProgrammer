@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum CraftType {
+public enum CraftType implements Serializable {
     Acro(0),
     heli120(1),
     heli90(2),

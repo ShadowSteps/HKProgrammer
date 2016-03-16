@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.values;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public class ThrottleCurve {
+public class ThrottleCurve implements Serializable  {
     private byte Normal = 0;
     private byte ID = 0;
 

@@ -7,20 +7,21 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shadows.hkprogrammer.windows.controllers.FXMLController">
    <children>
-      <TitledPane animated="false" collapsible="false" graphicTextGap="0.0" prefHeight="822.0" prefWidth="1022.0" text="Shadows HK Proggrammer">
+      <TitledPane animated="false" collapsible="false" graphicTextGap="0.0" prefHeight="870.0" prefWidth="1022.0" text="Shadows HK Proggrammer">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="795.0" prefWidth="1020.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="850.0" prefWidth="1020.0">
                <children>
-                  <VBox prefHeight="768.0" prefWidth="1023.0">
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1020.0">
                      <children>
-                        <MenuBar>
+                        <MenuBar prefHeight="30.0" prefWidth="1015.0">
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
+                                <MenuItem onAction="#closeAppAction"  mnemonicParsing="false" text="Close" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
@@ -34,7 +35,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1016.0" style="-fx-border-radius: 0;">
                                  <children>
-                                    <VBox layoutX="3.0" prefHeight="251.0" prefWidth="1013.0">
+                                    <VBox layoutX="3.0" prefHeight="270.0" prefWidth="1013.0">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1018.0" text="Channel 1 Position" textAlignment="CENTER">
                                              <VBox.margin>
@@ -43,65 +44,85 @@
                                           </Label>
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar1" nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar1" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1022.0" text="Channel 2 Position" textAlignment="CENTER" />
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar2" nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar2" prefHeight="24.0" prefWidth="509.0" progress="0.0">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin></ProgressBar>
                                              </children>
                                           </HBox>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1022.0" text="Channel 3 Position" textAlignment="CENTER" />
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar3" nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar3" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1022.0" text="Channel 4 Position" textAlignment="CENTER" />
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar4" nodeOrientation="RIGHT_TO_LEFT" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar4" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1022.0" text="Channel 5 Position" textAlignment="CENTER" />
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar5" nodeOrientation="RIGHT_TO_LEFT"  prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar5" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="1022.0" text="Channel 6 Position" textAlignment="CENTER" />
                                           <HBox prefHeight="24.0" prefWidth="9651024.0">
                                              <children>
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
-                                                <ProgressBar prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="LeftBar6" nodeOrientation="RIGHT_TO_LEFT"  prefHeight="24.0" prefWidth="509.0" progress="0.0" />
+                                                <ProgressBar fx:id="RightBar6" prefHeight="24.0" prefWidth="509.0" progress="0.0" />
                                              </children>
                                           </HBox>
                                        </children>
+                                       <fx:define>
+                                            <ArrayList fx:id="LeftBars" >
+                                                <fx:reference source="LeftBar1"/>
+                                                <fx:reference source="LeftBar2"/>
+                                                <fx:reference source="LeftBar3"/>
+                                                <fx:reference source="LeftBar4"/>
+                                                <fx:reference source="LeftBar5"/>
+                                                <fx:reference source="LeftBar6"/>
+                                            </ArrayList>
+                                            <ArrayList fx:id="RightBars" >
+                                                <fx:reference source="RightBar1"/>
+                                                <fx:reference source="RightBar2"/>
+                                                <fx:reference source="RightBar3"/>
+                                                <fx:reference source="RightBar4"/>
+                                                <fx:reference source="RightBar5"/>
+                                                <fx:reference source="RightBar6"/>
+                                            </ArrayList>
+                                        </fx:define>
                                     </VBox>
                                  </children>
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" prefHeight="440.0" prefWidth="1023.0" text="Parameters">
+                        <TitledPane animated="false" collapsible="false" prefHeight="465.0" prefWidth="1022.0" text="Parameters">
                           <content>
-                            <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="410.0" prefWidth="939.0">
+                            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="434.0" prefWidth="1020.0">
                                  <children>
-                                    <GridPane layoutX="-3.0" layoutY="-1.0" prefHeight="386.0" prefWidth="1022.0">
+                                    <GridPane layoutX="-3.0" layoutY="-1.0" prefHeight="438.0" prefWidth="1022.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="341.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="760.0" minWidth="10.0" prefWidth="348.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="760.0" minWidth="10.0" prefWidth="338.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="144.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="247.0" minHeight="10.0" prefHeight="211.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="134.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="303.0" minHeight="10.0" prefHeight="303.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
                                           <AnchorPane prefHeight="185.0" prefWidth="339.0">
@@ -174,39 +195,737 @@
                                                             <Label text="Channel 1" GridPane.rowIndex="1" />
                                                             <Label text="Channel 2" GridPane.rowIndex="2" />
                                                             <Label text="Channel 3" GridPane.rowIndex="3" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                            <TextField prefHeight="27.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                            <TextField fx:id="DROnCH1" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                               </GridPane.margin></TextField>
+                                                            <TextField fx:id="DROffCH1" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin></TextField>
+                                                            <TextField fx:id="DROnCH2" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin></TextField>
+                                                            <TextField fx:id="DROffCH2" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin></TextField>
+                                                            <TextField fx:id="DROnCH3" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin></TextField>
+                                                            <TextField fx:id="DROffCH3" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="24.0" prefWidth="99.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin></TextField>
                                                          </children>
+                                                         <fx:define>
+                                                            <ArrayList fx:id="DROnValues" >
+                                                                <fx:reference source="DROnCH1"/>
+                                                                <fx:reference source="DROnCH2"/>
+                                                                <fx:reference source="DROnCH3"/>
+                                                            </ArrayList>
+                                                            <ArrayList fx:id="DROffValues" >
+                                                                <fx:reference source="DROffCH1"/>
+                                                                <fx:reference source="DROffCH2"/>
+                                                                <fx:reference source="DROffCH3"/>
+                                                            </ArrayList>
+                                                        </fx:define>
                                                       </GridPane>
                                                    </children>
                                                 </AnchorPane>
                                             </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" collapsible="false" text="Reverse Bitmask" GridPane.columnIndex="1">
+                                          <HBox GridPane.columnIndex="1">
+                                             <children>
+                                                <TitledPane animated="false" collapsible="false" minWidth="-Infinity" prefHeight="135.0" prefWidth="185.0" text="Reverse Bitmask" GridPane.columnIndex="1">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                         <children>
+                                                            <GridPane layoutX="4.0" prefHeight="104.0" prefWidth="175.0">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <CheckBox fx:id="ReverseChannel1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 1" textAlignment="CENTER" />
+                                                                  <CheckBox fx:id="ReverseChannel2" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 2" textAlignment="CENTER" GridPane.rowIndex="1" />
+                                                                  <CheckBox fx:id="ReverseChannel3" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 3" textAlignment="CENTER" GridPane.rowIndex="2" />
+                                                                  <CheckBox fx:id="ReverseChannel4" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 4" textAlignment="CENTER" GridPane.columnIndex="1" />
+                                                                  <CheckBox fx:id="ReverseChannel5" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 5" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <CheckBox fx:id="ReverseChannel6" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 6" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                               </children>
+                                                               <fx:define>
+                                                                    <ArrayList fx:id="ReverseBitmaskValues" >
+                                                                        <fx:reference source="ReverseChannel1"/>
+                                                                        <fx:reference source="ReverseChannel2"/>
+                                                                        <fx:reference source="ReverseChannel3"/>
+                                                                        <fx:reference source="ReverseChannel4"/>
+                                                                        <fx:reference source="ReverseChannel5"/>
+                                                                        <fx:reference source="ReverseChannel6"/>
+                                                                    </ArrayList>                        
+                                                                </fx:define>
+                                                            </GridPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </TitledPane>
+                                                <TitledPane animated="false" collapsible="false" minWidth="-Infinity" prefHeight="135.0" prefWidth="161.0" text="Swash">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="154.0">
+                                                         <children>
+                                                            <GridPane layoutX="7.0" layoutY="9.0" prefHeight="89.0" prefWidth="146.0">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="69.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="92.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <Label text="Channel 1" />
+                                                                  <Label text="Channel 2" GridPane.rowIndex="1" />
+                                                                  <Label text="Channel 6" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="SwashChannel1" GridPane.columnIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SwashChannel2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SwashChannel6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <fx:define>
+                                                                    <ArrayList fx:id="SwashValues" >
+                                                                        <fx:reference source="SwashChannel1"/>
+                                                                        <fx:reference source="SwashChannel2"/>
+                                                                        <fx:reference source="SwashChannel6"/>
+                                                                    </ArrayList>                        
+                                                                </fx:define>
+                                                            </GridPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </TitledPane>
+                                             </children>
+                                          </HBox>
+                                          <TitledPane animated="false" collapsible="false" prefHeight="303.0" prefWidth="339.0" text="End points" GridPane.rowIndex="1">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <GridPane prefHeight="104.0" prefWidth="345.0">
+                                                      <GridPane prefHeight="250.0" prefWidth="319.0">
                                                         <columnConstraints>
                                                           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                         </columnConstraints>
                                                         <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 1" textAlignment="CENTER" />
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 2" textAlignment="CENTER" GridPane.rowIndex="1" />
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 3" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 4" textAlignment="CENTER" GridPane.columnIndex="2" />
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 5" textAlignment="CENTER" GridPane.columnIndex="1" />
-                                                            <CheckBox alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Channel 6" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                            <Label text="Left" GridPane.columnIndex="1" />
+                                                            <Label text="Right" GridPane.columnIndex="2" />
+                                                            <Label text="Channel 1" GridPane.rowIndex="1" />
+                                                            <Label text="Channel 2" GridPane.rowIndex="2" />
+                                                            <Label text="Channel 3" GridPane.rowIndex="3" />
+                                                            <Label text="Channel 4" GridPane.rowIndex="4" />
+                                                            <Label text="Channel 5" GridPane.rowIndex="5" />
+                                                            <Label text="Channel 6" GridPane.rowIndex="6" />
+                                                            <TextField fx:id="EPLeft1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight2" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPLeft3" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight1" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPLeft2" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPLeft5" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight4" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPLeft4" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight3" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight5" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPLeft6" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                            <TextField fx:id="EPRight6" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                                               <GridPane.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </GridPane.margin>
+                                                            </TextField>
+                                                         </children>
+                                                         <fx:define>
+                                                            <ArrayList fx:id="EPLeftValues" >
+                                                                <fx:reference source="EPLeft1"/>
+                                                                <fx:reference source="EPLeft2"/>
+                                                                <fx:reference source="EPLeft3"/>
+                                                                <fx:reference source="EPLeft4"/>
+                                                                <fx:reference source="EPLeft5"/>
+                                                                <fx:reference source="EPLeft6"/>
+                                                            </ArrayList>                        
+                                                        </fx:define>
+                                                        <fx:define>
+                                                            <ArrayList fx:id="EPRightValues" >
+                                                                <fx:reference source="EPRight1"/>
+                                                                <fx:reference source="EPRight2"/>
+                                                                <fx:reference source="EPRight3"/>
+                                                                <fx:reference source="EPRight4"/>
+                                                                <fx:reference source="EPRight5"/>
+                                                                <fx:reference source="EPRight6"/>
+                                                            </ArrayList>                        
+                                                        </fx:define>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </TitledPane>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <TitledPane animated="false" collapsible="false" prefHeight="303.0" prefWidth="185.0" text="Subtrim">
+                                                  <content>
+                                                    <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="275.0" prefWidth="157.0">
+                                                         <children>
+                                                            <GridPane layoutY="23.0" prefHeight="227.0" prefWidth="155.0">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="81.0" minWidth="10.0" prefWidth="56.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="96.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <TextField fx:id="SubtrimChannel1" GridPane.columnIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <Label text="Channel 6" GridPane.rowIndex="5" />
+                                                                  <Label text="Channel 5" GridPane.rowIndex="4" />
+                                                                  <Label text="Channel 4" GridPane.rowIndex="3" />
+                                                                  <Label text="Channel 3" GridPane.rowIndex="2" />
+                                                                  <Label text="Channel 2" GridPane.rowIndex="1" />
+                                                                  <Label text="Channel 1" />
+                                                                  <TextField fx:id="SubtrimChannel2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SubtrimChannel3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SubtrimChannel4" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SubtrimChannel5" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="SubtrimChannel6" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <fx:define>
+                                                                    <ArrayList fx:id="SubtrimValues" >
+                                                                        <fx:reference source="SubtrimChannel1"/>
+                                                                        <fx:reference source="SubtrimChannel2"/>
+                                                                        <fx:reference source="SubtrimChannel3"/>
+                                                                        <fx:reference source="SubtrimChannel4"/>
+                                                                        <fx:reference source="SubtrimChannel5"/>
+                                                                        <fx:reference source="SubtrimChannel6"/>
+                                                                    </ArrayList>                        
+                                                                </fx:define>
+                                                            </GridPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </TitledPane>
+                                                <TitledPane animated="false" collapsible="false" minWidth="161" prefHeight="303.0" prefWidth="161.0" text="Mixes">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="303.0" prefWidth="161">
+                                                         <children>
+                                                            <TabPane prefHeight="277.0" prefWidth="159.0" tabClosingPolicy="UNAVAILABLE">
+                                                              <tabs>
+                                                                <Tab text="Mix 1">
+                                                                  <content>
+                                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                           <children>
+                                                                              <GridPane prefHeight="245.0" prefWidth="160.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
+                                                                                <columnConstraints>
+                                                                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                </columnConstraints>
+                                                                                <rowConstraints>
+                                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                </rowConstraints>
+                                                                                 <children>
+                                                                                    <Label text="Destination">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Source" GridPane.rowIndex="1">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Up rate" GridPane.rowIndex="2">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Down rate" GridPane.rowIndex="3">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Switch" GridPane.rowIndex="4">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <ChoiceBox fx:id="MixDestination1" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSource1" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSwitch1"  prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                                    <TextField fx:id="MixUpRate1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                    <TextField fx:id="MixDownRate1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                                 </children>
+                                                                              </GridPane>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                  </content>
+                                                                </Tab>
+                                                                <Tab text="Mix 2">
+                                                                  <content>
+                                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                           <children>
+                                                                              <GridPane prefHeight="245.0" prefWidth="160.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
+                                                                                 <children>
+                                                                                    <Label text="Destination">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Source" GridPane.rowIndex="1">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Up rate" GridPane.rowIndex="2">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Down rate" GridPane.rowIndex="3">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Switch" GridPane.rowIndex="4">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <ChoiceBox fx:id="MixDestination2" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSource2" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSwitch2"  prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                                    <TextField fx:id="MixUpRate2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                    <TextField fx:id="MixDownRate2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                                  </children>
+                                                                                 <columnConstraints>
+                                                                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                 </columnConstraints>
+                                                                                 <rowConstraints>
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                 </rowConstraints>
+                                                                              </GridPane>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                  </content>
+                                                                </Tab>
+                                                                  <Tab text="Mix 3">
+                                                                    <content>
+                                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                           <children>
+                                                                              <GridPane prefHeight="245.0" prefWidth="160.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="15.0">
+                                                                                 <children>
+                                                                                    <Label text="Destination">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Source" GridPane.rowIndex="1">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Up rate" GridPane.rowIndex="2">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Down rate" GridPane.rowIndex="3">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <Label text="Switch" GridPane.rowIndex="4">
+                                                                                       <GridPane.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </GridPane.margin>
+                                                                                    </Label>
+                                                                                    <ChoiceBox fx:id="MixDestination3" prefWidth="150.0" GridPane.columnIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSource3" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                                    <ChoiceBox fx:id="MixSwitch3"  prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                                    <TextField fx:id="MixUpRate3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                    <TextField fx:id="MixDownRate3" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                                 </children>
+                                                                                 <columnConstraints>
+                                                                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                 </columnConstraints>
+                                                                                 <rowConstraints>
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                 </rowConstraints>
+                                                                              </GridPane>
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                  </Tab>
+                                                              </tabs>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="MixDestinations" >
+                                                                    <fx:reference source="MixDestination1"/>
+                                                                    <fx:reference source="MixDestination2"/>
+                                                                    <fx:reference source="MixDestination3"/>
+                                                                </ArrayList> 
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="MixSources" >
+                                                                    <fx:reference source="MixSource1"/>
+                                                                    <fx:reference source="MixSource2"/>
+                                                                    <fx:reference source="MixSource3"/>
+                                                                </ArrayList>                            
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="MixSwitches" >
+                                                                    <fx:reference source="MixSwitch1"/>
+                                                                    <fx:reference source="MixSwitch2"/>
+                                                                    <fx:reference source="MixSwitch3"/>
+                                                                </ArrayList>                            
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="MixUpRates" >
+                                                                    <fx:reference source="MixUpRate1"/>
+                                                                    <fx:reference source="MixUpRate2"/>
+                                                                    <fx:reference source="MixUpRate3"/>
+                                                                </ArrayList>                            
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="MixDownRates" >
+                                                                    <fx:reference source="MixDownRate1"/>
+                                                                    <fx:reference source="MixDownRate2"/>
+                                                                    <fx:reference source="MixDownRate3"/>
+                                                                </ArrayList>                            
+                                                              </fx:define>
+                                                            </TabPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </TitledPane>
+                                             </children>
+                                          </HBox>
+                                          <TitledPane animated="false" collapsible="false" prefHeight="308.0" prefWidth="337.0" text="Curves" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="276.0" prefWidth="337.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints maxHeight="121.0" minHeight="10.0" prefHeight="27.999996185302734" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="224.00000381469727" minHeight="10.0" prefHeight="224.00000381469727" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <Label text="Throttle" GridPane.halignment="CENTER">
+                                                               <GridPane.margin>
+                                                                  <Insets left="35.0" />
+                                                               </GridPane.margin>
+                                                            </Label>
+                                                            <Label text="Pitch" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                                               <padding>
+                                                                  <Insets left="35.0" />
+                                                               </padding>
+                                                            </Label>
+                                                            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                              <columnConstraints>
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="48.0" minWidth="10.0" prefWidth="47.0" />
+                                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="68.0" minWidth="10.0" prefWidth="61.0" />
+                                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="64.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <Label text="Normal" GridPane.columnIndex="1" />
+                                                                  <Label text="ID" GridPane.columnIndex="2" />
+                                                                  <TextField fx:id="ThrottleNormalValues0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleIDValues0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleNormalValues1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleIDValues1" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleNormalValues2" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleIDValues2" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleNormalValues3" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleIDValues3" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleNormalValues4" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="ThrottleIDValues4" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <Label text="EP0" GridPane.rowIndex="1" />
+                                                                  <Label text="EP1" GridPane.rowIndex="2" />
+                                                                  <Label text="EP2" GridPane.rowIndex="3" />
+                                                                  <Label text="EP3" GridPane.rowIndex="4" />
+                                                                  <Label text="EP4" GridPane.rowIndex="5" />
+                                                               </children>
+                                                               <fx:define>
+                                                                <ArrayList fx:id="ThrottleNormalValues" >
+                                                                    <fx:reference source="ThrottleNormalValues0"/>
+                                                                    <fx:reference source="ThrottleNormalValues1"/>
+                                                                    <fx:reference source="ThrottleNormalValues2"/>
+                                                                    <fx:reference source="ThrottleNormalValues3"/>
+                                                                    <fx:reference source="ThrottleNormalValues4"/>
+                                                                </ArrayList> 
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="ThrottleIDValues" >
+                                                                    <fx:reference source="ThrottleIDValues0"/>
+                                                                    <fx:reference source="ThrottleIDValues1"/>
+                                                                    <fx:reference source="ThrottleIDValues2"/>
+                                                                    <fx:reference source="ThrottleIDValues3"/>
+                                                                    <fx:reference source="ThrottleIDValues4"/>
+                                                                </ArrayList>                            
+                                                              </fx:define>
+                                                            </GridPane>
+                                                            <GridPane GridPane.rowIndex="1">
+                                                               <children>
+                                                                  <Label text="Normal" GridPane.columnIndex="1" />
+                                                                  <Label text="ID" GridPane.columnIndex="2" />
+                                                                  <TextField fx:id="PitchNoramlValues0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchIDValues0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchNoramlValues1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchIDValues1" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchNoramlValues2" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchIDValues2" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchNoramlValues3" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchIDValues3" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchNoramlValues4" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <TextField fx:id="PitchIDValues4" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </GridPane.margin>
+                                                                  </TextField>
+                                                                  <Label text="EP0" GridPane.rowIndex="1" />
+                                                                  <Label text="EP1" GridPane.rowIndex="2" />
+                                                                  <Label text="EP2" GridPane.rowIndex="3" />
+                                                                  <Label text="EP3" GridPane.rowIndex="4" />
+                                                                  <Label text="EP4" GridPane.rowIndex="5" />
+                                                               </children>                                                                    
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="48.0" minWidth="10.0" prefWidth="47.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="68.0" minWidth="10.0" prefWidth="61.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="64.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <fx:define>
+                                                                <ArrayList fx:id="PitchNormalValues" >
+                                                                    <fx:reference source="PitchNoramlValues0"/>
+                                                                    <fx:reference source="PitchNoramlValues1"/>
+                                                                    <fx:reference source="PitchNoramlValues2"/>
+                                                                    <fx:reference source="PitchNoramlValues3"/>
+                                                                    <fx:reference source="PitchNoramlValues4"/>
+                                                                </ArrayList> 
+                                                              </fx:define>
+                                                              <fx:define>
+                                                                <ArrayList fx:id="PitchIDValues" >
+                                                                    <fx:reference source="PitchIDValues0"/>
+                                                                    <fx:reference source="PitchIDValues1"/>
+                                                                    <fx:reference source="PitchIDValues2"/>
+                                                                    <fx:reference source="PitchIDValues3"/>
+                                                                    <fx:reference source="PitchIDValues4"/>
+                                                                </ArrayList>  
+                                                              </fx:define>
+                                                            </GridPane>
                                                          </children>
                                                       </GridPane>
                                                    </children>
@@ -219,6 +938,40 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
+                        <HBox >
+                            <children>
+                                <Button text="Upload Parameters" onAction="#onUploadClick" >
+                                    <HBox.margin>
+                                        <Insets>
+                                             <right>10</right>
+                                             <bottom>5</bottom>
+                                             <left>10</left>
+                                             <top>15</top>
+                                        </Insets>
+                                    </HBox.margin>
+                                </Button>
+                                <Button text="Save Parameters Config" onAction="#onSaveClick">
+                                    <HBox.margin>
+                                        <Insets>
+                                             <right>10</right>
+                                             <bottom>5</bottom>
+                                             <left>0</left>
+                                             <top>15</top>
+                                        </Insets>
+                                    </HBox.margin>
+                                </Button>
+                                <Button text="Load Parameters Config" onAction="#onLoadClick">
+                                    <HBox.margin>
+                                        <Insets>
+                                             <right>10</right>
+                                             <bottom>5</bottom>
+                                             <left>0</left>
+                                             <top>15</top>
+                                        </Insets>
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>                        
                      </children>
                   </VBox>
                </children>

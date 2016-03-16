@@ -5,11 +5,13 @@
  */
 package com.shadows.hkprogrammer.core.messages.enums;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John
  */
-public enum MixSwitch {
+public enum MixSwitch implements Serializable  {
     SWA(0),
     SWB(1),
     ON(2),
