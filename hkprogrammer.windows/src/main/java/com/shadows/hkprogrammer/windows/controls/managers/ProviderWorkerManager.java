@@ -8,8 +8,7 @@ package com.shadows.hkprogrammer.windows.controls.managers;
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
 import com.shadows.hkprogrammer.windows.controls.eventlistners.PortsLoadedListner;
 import com.shadows.hkprogrammer.windows.controls.events.PortsLoadedEvent;
-import com.shadows.hkprogrammer.windows.core.tasks.GetPortsListTask;
-import java.awt.event.ActionListener;
+import com.shadows.hkprogrammer.core.client.GetPortsListTask;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 

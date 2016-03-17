@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.windows.core.tasks;
+package com.shadows.hkprogrammer.core.client;
 
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import javafx.concurrent.Task;
  *
  * @author John
  */
-public class GetPortsListTask extends Task<Boolean>{
+public class GetPortsListTask implements Runnable{
     public boolean isSuccessful = false;
     private ArrayList<String> Ports = new ArrayList<>();
     private final ICommunicationProvider provider;
@@ -25,13 +25,12 @@ public class GetPortsListTask extends Task<Boolean>{
     public ArrayList<String> getPorts() {
         return Ports;
     }        
-    
     @Override
-    protected Boolean call() throws Exception {
+    public void run() {
         isSuccessful = false;
         synchronized(provider){            
             Ports = provider.GetListOfPorts();
         }         
-        return isSuccessful = true;
-    }    
+        isSuccessful = true;
+    }
 }

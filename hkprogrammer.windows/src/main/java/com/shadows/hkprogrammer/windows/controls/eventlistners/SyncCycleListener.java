@@ -6,7 +6,7 @@
 package com.shadows.hkprogrammer.windows.controls.eventlistners;
 
 import com.shadows.hkprogrammer.windows.controllers.FXMLController;
-import com.shadows.hkprogrammer.windows.controls.events.PositionSyncEvent;
+import com.shadows.hkprogrammer.core.client.events.PositionSyncEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

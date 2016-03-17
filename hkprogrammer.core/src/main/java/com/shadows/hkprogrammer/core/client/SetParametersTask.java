@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.windows.core.tasks;
+package com.shadows.hkprogrammer.core.client;
 
 import com.shadows.hkprogrammer.core.communication.Communicator;
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
