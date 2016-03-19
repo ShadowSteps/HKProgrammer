@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.shadows.hkprogrammer.windows.controls.eventlistners;
+package com.shadows.hkprogrammer.windows.core.tasks;
 
 import com.shadows.hkprogrammer.windows.controls.managers.AlertManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.shadows.hkprogrammer.windows.controls.managers.DialogManager;
+import javafx.concurrent.Task;
 
 /**
  *
  * @author John
  */
-public class ParameterSetFailedListener implements ActionListener{
+public class ParameterSetFailUITask extends Task<Boolean>{
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    protected Boolean call() throws Exception {
+        DialogManager.CloseLoadingDialog();
         AlertManager.AlertError("Failed to set parameters!");
+        return true;
     }
     
 }

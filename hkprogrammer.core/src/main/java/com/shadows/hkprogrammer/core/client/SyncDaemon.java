@@ -6,25 +6,25 @@
 package com.shadows.hkprogrammer.core.client;
 
 import com.shadows.hkprogrammer.core.communication.Communicator;
-import com.shadows.hkprogrammer.core.messages.ParameterMessage;
+import com.shadows.hkprogrammer.core.messages.PositionValuesMessage;
+import java.io.IOException;
+
 
 /**
  *
  * @author John
  */
-public class ParameterSyncTask extends RunnableTask<ParameterMessage>{    
+public class SyncDaemon extends RunnableDaemon<PositionValuesMessage>{
     private final Communicator communicator;
-    
-    public ParameterSyncTask(Communicator communicator) {
+
+    public SyncDaemon(Communicator communicator) {
         this.communicator = communicator;
-    }
-    
+    }    
     @Override
-    protected ParameterMessage doRoutine() throws Exception{
-        ParameterMessage message;
+    protected PositionValuesMessage doCycle() throws IOException {
         synchronized(communicator){            
-            communicator.ParametersSync();
+            communicator.Sync();
         } 
-        return communicator.getStatus().Parameters;
+        return communicator.getStatus().Positions;
     }
 }

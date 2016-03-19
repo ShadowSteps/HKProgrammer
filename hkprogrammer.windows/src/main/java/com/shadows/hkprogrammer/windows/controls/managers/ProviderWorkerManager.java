@@ -6,60 +6,32 @@
 package com.shadows.hkprogrammer.windows.controls.managers;
 
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.PortsLoadedListner;
-import com.shadows.hkprogrammer.windows.controls.events.PortsLoadedEvent;
+import com.shadows.hkprogrammer.windows.core.listeners.PortsLoadingSuccessListener;
 import com.shadows.hkprogrammer.core.client.GetPortsListTask;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import com.shadows.hkprogrammer.windows.controllers.SelectProviderController;
+import com.shadows.hkprogrammer.windows.core.listeners.PortsLoadingFailedListener;
+import com.shadows.hkprogrammer.windows.core.listeners.PortsLoadingStartListener;
+import javafx.application.Platform;
 
 /**
  *
  * @author John
  */
 public class ProviderWorkerManager {
-    private final GetPortsListTask getPortsListWorker;
+    private GetPortsListTask getPortsListWorker;
     private final ICommunicationProvider provider;
-    public PortsLoadedListner onPortsLoaded;
-
-    public ProviderWorkerManager(ICommunicationProvider provider) {
-        this.getPortsListWorker = new GetPortsListTask(provider);
+    public PortsLoadingSuccessListener onPortsLoaded;
+    private final SelectProviderController controller;
+    public ProviderWorkerManager(ICommunicationProvider provider, SelectProviderController controller) {        
         this.provider = provider;
+        this.controller = controller;
     }
     
     public void RunGetPortsTask(){
-        getPortsListWorker.setOnRunning((e) -> {
-            try {
-                DialogManager.ShowLoadingDialog();
-            } catch (IOException ex) {               
-            }
-        });
-        getPortsListWorker.setOnSucceeded((e) -> {
-            DialogManager.CloseLoadingDialog();
-            boolean result = false;
-            try{
-                result = getPortsListWorker.get();                
-            }
-            catch(InterruptedException | ExecutionException exp){                            
-            }
-            if (!result)
-                AlertManager.AlertError("Could not get ports for provider!");
-            if(onPortsLoaded != null)
-                    onPortsLoaded.actionPerformed(
-                            new PortsLoadedEvent(
-                                    provider, 
-                                    getPortsListWorker.getPorts()
-                            )
-                    );                    
-        });
-        getPortsListWorker.setOnFailed((e) -> {
-            DialogManager.CloseLoadingDialog();
-            try{
-                boolean result = getPortsListWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){            
-                AlertManager.AlertError("Could not get ports for provider!");
-            }
-        });
+        getPortsListWorker = new GetPortsListTask(provider);
+        getPortsListWorker.onStart = new PortsLoadingStartListener();
+        getPortsListWorker.onSuccess = new PortsLoadingSuccessListener(controller);
+        getPortsListWorker.onError = new PortsLoadingFailedListener();
         new Thread(getPortsListWorker).start();
     }
     

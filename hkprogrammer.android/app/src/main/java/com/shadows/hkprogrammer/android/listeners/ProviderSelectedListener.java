@@ -20,7 +20,7 @@ public class ProviderSelectedListener extends Activity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         AndroidProviderType Type = (AndroidProviderType)parent.getItemAtPosition(position);
-
+        activity.LoadProvider(Type);
     }
 
     @Override

@@ -7,11 +7,11 @@ package com.shadows.hkprogrammer.windows.controllers;
  */
 
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.PortsLoadedListner;
+import com.shadows.hkprogrammer.windows.core.listeners.PortsLoadingSuccessListener;
 import com.shadows.hkprogrammer.windows.controls.managers.AlertManager;
 import com.shadows.hkprogrammer.windows.controls.lists.ConnectionTypesList;
 import com.shadows.hkprogrammer.windows.core.providers.UsbConnectionProvider;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.ProviderTypeChangeListner;
+import com.shadows.hkprogrammer.windows.core.listeners.ProviderTypeChangeListner;
 import com.shadows.hkprogrammer.windows.controls.managers.ProviderWorkerManager;
 import java.io.IOException;
 import java.net.URL;
@@ -77,7 +77,7 @@ public class SelectProviderController implements Initializable {
             Stage stage  = (Stage) source.getScene().getWindow();
             stage.close();
         }
-        catch(IOException exp){
+        catch(Exception exp){
             AlertManager.AlertError("Could not establish connection with "+SelectedPortPosition);
         }
     }
@@ -96,8 +96,7 @@ public class SelectProviderController implements Initializable {
                 AlertManager.AlertError("Selected invalid provider type!");
                 return;
         }
-        ProviderWorkerManager manager = new ProviderWorkerManager(SelectedProvider);
-        manager.onPortsLoaded = new PortsLoadedListner(this);
+        ProviderWorkerManager manager = new ProviderWorkerManager(SelectedProvider,this);
         manager.RunGetPortsTask();
     }
 }

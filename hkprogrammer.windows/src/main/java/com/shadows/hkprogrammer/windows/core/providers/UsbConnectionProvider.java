@@ -56,7 +56,7 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
     @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
-            case SerialPortEvent.DATA_AVAILABLE:
+            case SerialPortEvent.DATA_AVAILABLE:                
                 receivedBytesBuffer = new ByteArray(1024);
                 int total = 0;
                 byte received = -1;
@@ -69,7 +69,7 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
                                 total == MessageHandlerConsts.msgPositionLength
                             )
                         ){
-                            synchronized (lock){
+                            synchronized(lock){
                                 this.ReadQueue.add(receivedBytesBuffer.Read(0, total));
                             }
                             receivedBytesBuffer = new ByteArray(1024);
@@ -121,7 +121,7 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
     }
 
     @Override
-    public void Write(ByteArray message) throws IOException {        
+    public void Write(ByteArray message) throws IOException {         
         writeOutputStream.write(message.ToPrimitive());
         writeOutputStream.flush();
     }
@@ -143,12 +143,12 @@ public class UsbConnectionProvider implements SerialPortEventListener,ICommunica
     @Override
     public ByteArray Read() throws IOException {
         ByteArray first;
-        synchronized (lock){
+        synchronized(lock){
             if (ReadQueue.isEmpty())
                 return new ByteArray(0);
             first = this.ReadQueue.get(0);
             ReadQueue.remove(0);
-        }
+        }       
         return first;        
     }
 

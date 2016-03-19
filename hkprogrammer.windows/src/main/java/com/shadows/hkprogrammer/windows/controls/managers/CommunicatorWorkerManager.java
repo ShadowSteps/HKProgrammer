@@ -7,137 +7,62 @@ package com.shadows.hkprogrammer.windows.controls.managers;
 
 import com.shadows.hkprogrammer.core.communication.Communicator;
 import com.shadows.hkprogrammer.core.messages.ParameterMessage;
-import com.shadows.hkprogrammer.windows.controls.events.ParametersLoadedEvent;
 import com.shadows.hkprogrammer.core.client.ParameterSyncTask;
 import com.shadows.hkprogrammer.core.client.SetParametersTask;
-import com.shadows.hkprogrammer.core.client.SyncTask;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import com.shadows.hkprogrammer.core.client.SyncDaemon;
+import com.shadows.hkprogrammer.windows.controllers.FXMLController;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSetSuccessListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSyncFailListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSyncSuccessListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSyncStartListener;
+import com.shadows.hkprogrammer.windows.core.listeners.SyncCycleListener;
+import javafx.application.Platform;
 
 /**
  *
  * @author John
  */
 public class CommunicatorWorkerManager {
-    private SyncTask syncWorker;
+    private SyncDaemon syncDaemon;
     private ParameterSyncTask parameterSyncWorker;
     private SetParametersTask parameterSetWorker;
-    public ActionListener onSyncStarted;
-    public ActionListener onSyncStopped;
-    public ActionListener onSyncFailed;
-    public ActionListener onSyncCycle;
-    public ActionListener onParameterSyncSuccess;
-    public ActionListener onParameterSyncFailed;
-    public ActionListener onParameterSetSuccess;
-    public ActionListener onParameterSetFailed;
     private final Communicator communicator;
-    public CommunicatorWorkerManager(Communicator communicator) {
+    private final FXMLController controller;
+    public CommunicatorWorkerManager(Communicator communicator,FXMLController controller) {
         this.communicator = communicator;
+        this.controller = controller;
     }
     
     public void StartSyncTask(){
-        this.syncWorker = new SyncTask(communicator);
-        syncWorker.setOnSucceeded((e) -> {
-            boolean result = false;
-            try{
-                result = syncWorker.get();
+        if(syncDaemon!=null){
+            StopSyncTask();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {                
             }
-            catch(InterruptedException | ExecutionException exp){                     
-            }            
-            if (!result&&onSyncFailed != null)
-                onSyncFailed.actionPerformed(null);
-        });
-        syncWorker.setOnFailed((e) -> {
-            try{
-                boolean result = syncWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){ 
-                if (onSyncFailed != null)
-                    onSyncFailed.actionPerformed(null);
-            }
-        });
-        syncWorker.isSyncing = true;    
-        syncWorker.onSyncCycleSuccess = onSyncCycle;
-        syncWorker.SyncInterval = 10;
-        new Thread(syncWorker).start();
-        if (onSyncStarted != null)
-            onSyncStarted.actionPerformed(null);     
+        }
+        this.syncDaemon = new SyncDaemon(communicator);  
+        syncDaemon.onCycleComplete = new SyncCycleListener(controller);
+        new Thread(syncDaemon).start();
     }
     
     public void StopSyncTask(){        
-        syncWorker.isSyncing = false;
-        if (onSyncStopped != null)
-            onSyncStopped.actionPerformed(null);
+        syncDaemon.stop();
     }
     
     public void RunParameterSyncTask(){   
-        this.parameterSyncWorker = new ParameterSyncTask(communicator);
-        parameterSyncWorker.setOnRunning((e) -> {
-            try {
-                DialogManager.ShowLoadingDialog();
-            } catch (IOException ex) {                
-            }
-        });
-        parameterSyncWorker.setOnSucceeded((e) -> {
-            DialogManager.CloseLoadingDialog();
-            boolean result = false;
-            try{
-                result = parameterSyncWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){                     
-            }            
-            if (!result&&onParameterSyncFailed != null)
-                onParameterSyncFailed.actionPerformed(null);
-            else if (result&&onParameterSyncSuccess != null)
-                onParameterSyncSuccess.actionPerformed(new ParametersLoadedEvent(communicator,parameterSyncWorker.getParameters()));
-        });
-        parameterSyncWorker.setOnFailed((e) -> {
-            DialogManager.CloseLoadingDialog();
-            try{
-                boolean result = parameterSyncWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){ 
-                if (onParameterSyncFailed != null)
-                    onParameterSyncFailed.actionPerformed(null);
-            }
-        });
-        
-        new Thread(parameterSyncWorker).start();    
+        this.parameterSyncWorker = new ParameterSyncTask(communicator);   
+        parameterSyncWorker.onSuccess = new ParameterSyncSuccessListener(controller);
+        parameterSyncWorker.onError = new ParameterSyncFailListener();
+        parameterSyncWorker.onStart = new ParameterSyncStartListener();
+        new Thread(parameterSyncWorker).start();
     }
     
     public void RunParameterSetTask(ParameterMessage message){                 
-        this.parameterSetWorker = new SetParametersTask(communicator);
-        parameterSetWorker.setOnRunning((e) -> {
-            try {
-                DialogManager.ShowLoadingDialog();
-            } catch (IOException ex) {                
-            }
-        });
-        parameterSetWorker.setOnSucceeded((e) -> {
-            DialogManager.CloseLoadingDialog();
-            boolean result = false;
-            try{
-                result = parameterSetWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){                     
-            }            
-            if (!result&&onParameterSetFailed != null)
-                onParameterSetFailed.actionPerformed(null);
-            else if (result&&onParameterSetSuccess != null)
-                onParameterSetSuccess.actionPerformed(null);
-        });
-        parameterSetWorker.setOnFailed((e) -> {
-            DialogManager.CloseLoadingDialog();
-            try{
-                boolean result = parameterSetWorker.get();
-            }
-            catch(InterruptedException | ExecutionException exp){ 
-                if (onParameterSetFailed != null)
-                    onParameterSetFailed.actionPerformed(null);
-            }
-        });                
-        parameterSetWorker.setMessage(message);
-        new Thread(parameterSetWorker).start();    
+        this.parameterSetWorker = new SetParametersTask(communicator,message);    
+        parameterSetWorker.onSuccess = new ParameterSetSuccessListener();
+        parameterSetWorker.onError = new ParameterSyncFailListener();
+        parameterSetWorker.onStart = new ParameterSyncStartListener();
+        new Thread(parameterSetWorker).start();  
     }
 }

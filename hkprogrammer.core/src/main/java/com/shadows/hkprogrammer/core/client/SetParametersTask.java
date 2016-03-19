@@ -16,23 +16,19 @@ import javafx.concurrent.Task;
  *
  * @author John
  */
-public class SetParametersTask extends Task<Boolean>{
-    public boolean isSuccessful = false;
+public class SetParametersTask extends RunnableTask<Boolean>{
     private final Communicator communicator;
-    private ParameterMessage message;
-    public SetParametersTask(Communicator provider) {
-        this.communicator = provider;        
-    }     
-    public void setMessage(ParameterMessage message){
+    private final ParameterMessage message;
+    public SetParametersTask(Communicator provider,ParameterMessage message) {
+        this.communicator = provider;       
         this.message = message;
-    }
-    
+    }     
+
     @Override
-    protected Boolean call() throws Exception {
-        isSuccessful = false;
+    protected Boolean doRoutine() throws Exception {
         synchronized(communicator){            
             communicator.SetParameters(message);
         }         
-        return isSuccessful = true;
-    }    
+        return true;
+    }
 }

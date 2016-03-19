@@ -7,30 +7,24 @@ package com.shadows.hkprogrammer.core.client;
 
 import com.shadows.hkprogrammer.core.communication.ICommunicationProvider;
 import java.util.ArrayList;
-import javafx.concurrent.Task;
 
 /**
  *
  * @author John
  */
-public class GetPortsListTask implements Runnable{
-    public boolean isSuccessful = false;
-    private ArrayList<String> Ports = new ArrayList<>();
+public class GetPortsListTask extends RunnableTask<ArrayList<String>>{
     private final ICommunicationProvider provider;
 
     public GetPortsListTask(ICommunicationProvider provider) {
         this.provider = provider;
     }
 
-    public ArrayList<String> getPorts() {
-        return Ports;
-    }        
     @Override
-    public void run() {
-        isSuccessful = false;
+    protected ArrayList<String> doRoutine() {
+        ArrayList<String> Ports;
         synchronized(provider){            
             Ports = provider.GetListOfPorts();
-        }         
-        isSuccessful = true;
+        }  
+        return Ports;
     }
 }

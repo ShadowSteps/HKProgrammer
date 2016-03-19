@@ -18,11 +18,11 @@ import com.shadows.hkprogrammer.core.messages.values.ParameterDRValue;
 import com.shadows.hkprogrammer.core.messages.values.PitchCurve;
 import com.shadows.hkprogrammer.core.messages.values.PotmeterEndPoint;
 import com.shadows.hkprogrammer.core.messages.values.ThrottleCurve;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.ParamaterSyncFailListener;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.ParamaterSyncSuccessListener;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.ParameterSetFailedListener;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.ParameterSetSuccessListener;
-import com.shadows.hkprogrammer.windows.controls.eventlistners.SyncCycleListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSyncFailListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSyncSuccessListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSetFailedListener;
+import com.shadows.hkprogrammer.windows.core.listeners.ParameterSetSuccessListener;
+import com.shadows.hkprogrammer.windows.core.listeners.SyncCycleListener;
 import com.shadows.hkprogrammer.windows.controls.managers.AlertManager;
 import com.shadows.hkprogrammer.windows.controls.managers.CommunicatorWorkerManager;
 import com.shadows.hkprogrammer.windows.controls.managers.DialogManager;
@@ -45,7 +45,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 
 public class FXMLController implements Initializable {
     private Communicator communicator;
@@ -179,14 +178,9 @@ public class FXMLController implements Initializable {
                 communicator = new Communicator(provider);
             else 
                 throw new IOException("Provider does not have connection opened!");
-            manager = new CommunicatorWorkerManager(communicator);
-            manager.onParameterSyncSuccess = new ParamaterSyncSuccessListener(this);      
-            manager.onParameterSyncFailed = new ParamaterSyncFailListener(this);
-            manager.onSyncCycle = new SyncCycleListener(this);
-            manager.onParameterSetFailed = new ParameterSetFailedListener();
-            manager.onParameterSetSuccess = new ParameterSetSuccessListener();
+            manager = new CommunicatorWorkerManager(communicator,this);            
             manager.RunParameterSyncTask();
-            manager.StartSyncTask();            
+            //manager.StartSyncTask();            
         } catch (IOException | InterruptedException exp) {
             AlertManager.AlertError("Could not initialize application!");
             Platform.exit();
