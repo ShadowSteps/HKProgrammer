@@ -20,7 +20,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
-import jdk.internal.org.objectweb.asm.Handle;
 
 /**
  *

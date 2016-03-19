@@ -10,9 +10,5 @@ import com.shadows.hkprogrammer.android.listeners.ConnectEventListener;
  */
 public class DialogManager {
     public static void ShowSelectProviderDialog(Activity Parent){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Parent);
-        alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setTitle("Моля изберете връзка.");
-        alertDialogBuilder.setPositiveButton("Свържи се",new ConnectEventListener());
     }
 }

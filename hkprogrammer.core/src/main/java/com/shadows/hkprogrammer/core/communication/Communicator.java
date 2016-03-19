@@ -50,7 +50,7 @@ public final class Communicator {
         return Status;
     }         
     
-    public void Sync() throws IOException{
+    public void Sync() throws IOException, Exception{
         ByteArray readBytes;
         while (!(readBytes= Provider.Read()).isEmpty()){
             ByteArray Header = readBytes.Read(0, 2);        
@@ -63,7 +63,7 @@ public final class Communicator {
         }
     }
     
-    public void ParametersSync() throws IOException, InterruptedException {
+    public void ParametersSync() throws IOException, InterruptedException, Exception {
         parametersSync = false;              
         for (int i = 0; i < 5; i++) {
             RequestParametersDump();  
@@ -76,14 +76,14 @@ public final class Communicator {
             throw new IOException("Could not sync parameters!");
     }
     
-    public final void RequestParametersDump() throws IOException{
+    public final void RequestParametersDump() throws IOException, Exception{
         parametersSync = false;
         ParameterRequest Request = new ParameterRequest();
         ByteArray bytes = Handler.GetBytesForParameterRequestMessage(Request);
         Provider.Write(bytes);
     }
     
-    public final void SetParameters(ParameterMessage parameters) throws IOException{
+    public final void SetParameters(ParameterMessage parameters) throws IOException, Exception{
         if (!parametersSync)
             throw new IllegalStateException("Cannot write parameter when they are not synced!");
         ByteArray bytes = Handler.GetBytesForParameterSetMessage(parameters);

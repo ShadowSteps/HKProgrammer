@@ -8,6 +8,7 @@ import android.widget.Toast;
  */
 public class AlertManager {
     public static void ShowErrorAlert(Activity parent,String error){
-        Toast.makeText(parent.getApplicationContext(),error,Toast.LENGTH_LONG);
+        Toast.makeText(parent.getBaseContext(),error,Toast.LENGTH_LONG)
+            .show();
     }
 }

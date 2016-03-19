@@ -1,5 +1,7 @@
 package com.shadows.hkprogrammer.android.core.listeners;
 
+import android.os.Message;
+
 import com.shadows.hkprogrammer.android.handlers.SelectProviderActivityHandler;
 import com.shadows.hkprogrammer.core.client.events.TaskOnSuccessEvent;
 import com.shadows.hkprogrammer.core.client.listeners.ATaskOnSuccessListener;
@@ -18,6 +20,7 @@ public class PortsLoadingSuccessListener extends ATaskOnSuccessListener<ArrayLis
 
     @Override
     public void onSuccess(TaskOnSuccessEvent<ArrayList<String>> result) {
-        handler.obtainMessage(SelectProviderActivityHandler.loadState,result);
+        Message message = handler.obtainMessage(SelectProviderActivityHandler.loadState, result.result);
+        message.sendToTarget();
     }
 }

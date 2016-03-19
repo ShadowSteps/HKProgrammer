@@ -4,7 +4,8 @@ package com.shadows.hkprogrammer.android.core.enums;
  * Created by John on 17.3.2016 г..
  */
 public enum AndroidProviderType {
-    Bluetooth(0);
+    Bluetooth(1),
+    USB(0);
 
     private int value;
 

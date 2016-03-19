@@ -1,11 +1,9 @@
 package com.shadows.hkprogrammer.android;
 
-import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.shadows.hkprogrammer.android.managers.ActivityManager;
-import com.shadows.hkprogrammer.android.managers.DialogManager;
 
 public class MainActivity extends AppCompatActivity {
 

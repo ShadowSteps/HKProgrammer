@@ -33,7 +33,7 @@ public class BluetoothProvider implements ICommunicationProvider {
 
     public BluetoothProvider() {
         this.adapter = BluetoothAdapter.getDefaultAdapter();
-        deviceUUID = UUID.randomUUID();
+        deviceUUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     }
 
     private void checkBluetoothStatus() throws BluetoothNotEnabledException {
@@ -49,19 +49,21 @@ public class BluetoothProvider implements ICommunicationProvider {
     @Override
     public void OpenConnection(String s) throws IOException, BluetoothDeviceNotFoundException {
         BluetoothDevice selected = null;
-        for (BluetoothDevice device: adapter.getBondedDevices()) {
-            if (device.getName() == s){
-                selected = device;
-                break;
-            }
-        }
+        String address = s.substring(s.length() - 17);
+        selected = adapter.getRemoteDevice(address);
         if (selected == null)
             throw new BluetoothDeviceNotFoundException("Device with name \""+s+"\" not found in paired devices!");
         socket = selected.createRfcommSocketToServiceRecord(deviceUUID);
-        input = socket.getInputStream();
-        output = socket.getOutputStream();
-        output.write(0);
-        isConnected = true;
+        try{
+            socket.connect();
+            input = socket.getInputStream();
+            output = socket.getOutputStream();
+            output.write(new byte[]{0});
+            isConnected = true;
+        } catch (Exception e){
+            this.CloseConnection();
+            throw e;
+        }
     }
 
     @Override
@@ -126,7 +128,7 @@ public class BluetoothProvider implements ICommunicationProvider {
         Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
         ArrayList<String> list = new ArrayList<>();
         for (BluetoothDevice device :  pairedDevices){
-            list.add(device.getName());
+            list.add(device.getName() + " - " + device.getAddress());
         }
         return list;
     }

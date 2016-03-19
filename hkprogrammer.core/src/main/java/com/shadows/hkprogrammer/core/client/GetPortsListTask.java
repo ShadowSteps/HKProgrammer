@@ -20,7 +20,7 @@ public class GetPortsListTask extends RunnableTask<ArrayList<String>>{
     }
 
     @Override
-    protected ArrayList<String> doRoutine() {
+    protected ArrayList<String> doRoutine() throws Exception {
         ArrayList<String> Ports;
         synchronized(provider){            
             Ports = provider.GetListOfPorts();
